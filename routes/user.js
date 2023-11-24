@@ -5,4 +5,6 @@ router.get("/", (res, req) => {
   res.send("User List");
 });
 
-router.get("new")
+router.get("new",(res,req)=>{
+    
+})
