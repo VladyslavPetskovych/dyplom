@@ -6,5 +6,5 @@ router.get("/", (res, req) => {
 });
 
 router.get("/new",(res,req)=>{
-    res.send('new user')
+    res.send('new user');
 })
