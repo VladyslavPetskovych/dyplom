@@ -2,7 +2,7 @@ const bot = require("./bot");
 
 const qOptions = {
   reply_markup: JSON.stringify({
-    inline_keyboard: [[{ text: "дати відповідь", callback_data: "startq" }]],
+    inline_keyboard: [[{ text: "Твоє ставлення до linkin park", callback_data: "linkin park" }]],
   }),
 };
 const chats = {}
@@ -18,10 +18,33 @@ bot.on("message", async (msg) => {
     );
   }
 });
+
+
+
 bot.on('callback_query', async msg=>{
+
+  const apiUrl = 'http://localhost:3000/';
+
+  // Make a GET request
+  fetch(apiUrl)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response;
+    })
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+    
+
+
     const data = msg.data;
     const chatId = msg.message.chat.id;
     console.log(msg);
-    return bot.sendMessage(chatId,"ти обрав" + data)
+    return bot.sendMessage(chatId,"ти обрав " + data)
 
 })
