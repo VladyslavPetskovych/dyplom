@@ -1,6 +1,6 @@
 const bot = require("./bot");
 
-const webappUrl = "https://www.google.com";
+const webappUrl = "https://dyplomstaticfrontend.netlify.app";
 
 bot.on("message", async (msg) => {
   const text = msg.text;
@@ -9,9 +9,7 @@ bot.on("message", async (msg) => {
   if (text === "/openWeb") {
     await bot.sendMessage(chatId, "Відкрити веб програму", {
       reply_markup: {
-        keyboard: [
-          [{ text: "Відкрити додаток", web_app: { url: webappUrl } }],
-        ],
+        keyboard: [[{ text: "Відкрити додаток", web_app: { url: webappUrl } }]],
       },
     });
   }

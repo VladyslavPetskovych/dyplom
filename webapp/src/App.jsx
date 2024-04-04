@@ -16,7 +16,7 @@ function App() {
       <div className="h-screen">
         <div className="flex flex-row bg-green-100 justify-between h-8">
           <p>Телеграм бот</p>
-          <button className="bg-red-400 w-24" onClick={onClose}>
+          <button className="bg-green-400 w-24" onClick={onClose}>
             close
           </button>
         </div>
