@@ -7,9 +7,14 @@ bot.on("message", async (msg) => {
   const chatId = msg.chat.id;
 
   if (text === "/openWeb") {
+    // await bot.sendMessage(chatId, "Відкрити веб програму", {
+    //   reply_markup: {
+    //     keyboard: [[{ text: "Відкрити додаток", web_app: { url: webappUrl } }]],
+    //   },
+    // });
     await bot.sendMessage(chatId, "Відкрити веб програму", {
       reply_markup: {
-        keyboard: [[{ text: "Відкрити додаток", web_app: { url: webappUrl } }]],
+        inline_keyboard: [[{ text: "Відкрити додаток", web_app: { url: webappUrl } }]],
       },
     });
   }

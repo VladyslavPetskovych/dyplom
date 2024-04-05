@@ -1,39 +1,21 @@
-const tg = window.Telegram.WebApp;
-import { useEffect } from "react";
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/home";
+import Communities from "./pages/communities";
+import Profile from "./pages/profile";
 import FooterMenu from "./component/footerMenu";
 
 function App() {
-  useEffect(() => {
-    tg.ready();
-  });
-
-  const onClose = () => {
-    tg.close();
-  };
-
   return (
-    <>
-      <div className="h-screen">
-        <div className="flex flex-row bg-green-100 justify-between h-8">
-          <p>Телеграм бот</p>
-          <button className="bg-green-400 w-24" onClick={onClose}>
-            close
-          </button>
-        </div>
-        <div className="bg-slate-200 h-32">
-          <p>Блок статистики</p>
-          <p>Скільки було вже відповідей на питання</p>
-          <p>Рейтинг користувача</p>
-        </div>
-        <div className="bg-slate-500 h-72">
-          <p>Блок з питаннями</p>
-          <p>категорії запитань</p>
-          <p>Питання (порядковий номер запитання)</p>
-          <p>Шкала відповідей 1-5 (позначки з смайликами )</p>
-        </div>
-      </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/communities" element={<Communities />} />
+        <Route path="/profile" element={<Profile />} />
+      </Routes>
+
       <FooterMenu />
-    </>
+    </BrowserRouter>
   );
 }
 
