@@ -1,7 +1,7 @@
 // Home.js
 const tg = window.Telegram.WebApp;
 import { useEffect } from "react";
-
+import SliderCategories from "./home/sliderCategories";
 function Home() {
   useEffect(() => {
     tg.ready();
@@ -30,6 +30,7 @@ function Home() {
           <p>Питання (порядковий номер запитання)</p>
           <p>Шкала відповідей 1-5 (позначки з смайликами )</p>
         </div>
+        <SliderCategories />
       </div>
     </div>
   );
