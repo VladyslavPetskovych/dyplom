@@ -4,13 +4,13 @@
   position: relative;
   display: inline-block;
   overflow: hidden;
-  margin: 10px;
-  min-width: 230px;
-  max-width: 315px;
+  margin: 5px;
+  min-width: 100px;
+  max-width: 160px;
   width: 100%;
-  color: #ffffff;
+  
   font-size: 16px;
-  text-align: left;
+  text-align: center;
 }
 .snip1584 * {
   -webkit-box-sizing: border-box;
@@ -26,7 +26,6 @@
   right: 10px;
   top: 100%;
   content: "";
-  background-color: rgba(51, 51, 51, 0.9);
   -webkit-transition: all 0.25s ease;
   transition: all 0.25s ease;
   -webkit-transition-delay: 0.25s;
@@ -81,39 +80,10 @@
   right: 0;
   z-index: 1;
 }
-.snip1584:hover:before,
-.snip1584.hover:before {
-  top: 10px;
-  -webkit-transition-delay: 0s;
-  transition-delay: 0s;
-}
-.snip1584:hover h3,
-.snip1584.hover h3,
-.snip1584:hover h5,
-.snip1584.hover h5 {
-  -webkit-transform: translateY(0);
-  transform: translateY(0);
-  opacity: 1;
-}
-.snip1584:hover h3,
-.snip1584.hover h3 {
-  -webkit-transition-delay: 0.3s;
-  transition-delay: 0.3s;
-}
-.snip1584:hover h5,
-.snip1584.hover h5 {
-  -webkit-transition-delay: 0.2s;
-  transition-delay: 0.2s;
-}
-/* Demo purposes only */
-body {
-  background-color: #212121;
+
+.sliderCat {
+
   text-align: center;
   color: white;
-}
-.app {
-  width: 1200px;
-  margin: auto;
-  font-family: "Raleway";
-  font-size: 24px;
+
 }

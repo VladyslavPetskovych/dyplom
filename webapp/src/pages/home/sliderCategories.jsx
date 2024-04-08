@@ -7,31 +7,70 @@ import "slick-carousel/slick/slick-theme.css";
 
 const cards = [
   {
-    image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample87.jpg",
-    title: "Burgundy Flemming",
-    subtitle: "Advertising",
+    title: "Музика",
+    style: "bg-slate-700 mr-24 w-auto mt-1",
   },
   {
-    image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample119.jpg",
-    title: "Nigel Nigel",
-    subtitle: "Sound & Vision",
+    title: "Фільми",
+    style: "bg-slate-300 ml-16 w-auto mb-1",
   },
   {
-    image: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/331810/sample120.jpg",
-    title: "Caspian Bellevedere",
-    subtitle: "Accounting",
+    title: "Мультфільми",
+    style: " ml-8 w-auto mb-1",
+  },
+  {
+    title: "Міста",
+    style: "bg-pink-600 ml-6 w-auto",
+  },
+  {
+    title: "Подорожі",
+  },
+  {
+    title: "Фільми",
+    style: "bg-pink-600 ml-8 ",
+  },
+  {
+    title: "Мультфільми",
+    style: "bg-red-600 mr-8 ",
+  },
+  {
+    title: "Мультфільми",
+    style: "bg-red-600 ml-8 ",
+  },
+  {
+    title: "Міста",
+    style: "bg-slate-600 ml-12 ",
+  },
+  {
+    title: "Подорожі ",
+    style: "bg-pink-600 ml-8 w-auto",
+  },
+  {
+    title: "Фільми",
+    style: "bg-pink-600 ml-8 w-auto",
+  },
+  {
+    title: "Мультфільми",
+    style: "bg-red-600 mr-12 w-auto",
+  },
+  {
+    title: "Міста",
+    style: "bg-slate-600 ml-12 w-auto",
+  },
+  {
+    title: "Мультфільми",
+    style: "bg-red-600 mr-12 w-auto",
   },
 ];
 
 const Article = ({ data }) => {
-  const { image, title, subtitle } = data;
+  const { title, style } = data;
+  const defaultStyle = "bg-green-500"; // Default background color if no style is specified
+  const bgColorClass = style ? `${style} ${defaultStyle}` : defaultStyle;
+
   return (
     <figure className="snip1584">
-      <img src={image} alt={title} />
-      <figcaption>
-        <h3>{title}</h3>
-        <h5>{subtitle}</h5>
-      </figcaption>
+      <p className={`${bgColorClass} rounded-full`}>{title}</p>
       <a href="#"></a>
     </figure>
   );
@@ -39,10 +78,37 @@ const Article = ({ data }) => {
 
 const News = ({ data }) => {
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
-    slidesToShow: 3,
+    slidesToShow: 6,
     slidesToScroll: 1,
+    autoplay: true,
+    rows: 3,
+    autoplaySpeed: 2600,
+    draggable: true,
+    responsive: [
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+        },
+      },
+      {
+        breakpoint: 800,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 1500,
+        settings: {
+          slidesToShow: 4,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   const newsTemplate =
@@ -59,16 +125,13 @@ const News = ({ data }) => {
   return (
     <div className="news">
       <Slider {...settings}>{newsTemplate}</Slider>
-      <strong className={"news__count " + (data.length > 0 ? "" : "none")}>
-        Total cards: {data.length}
-      </strong>
     </div>
   );
 };
 function sliderCategories() {
   return (
-    <div>
-      <h3>Cards</h3>
+    <div className="sliderCat">
+      <h3>Категорії</h3>
       <News data={cards} />
     </div>
   );
