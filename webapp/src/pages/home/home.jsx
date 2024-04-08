@@ -1,7 +1,8 @@
 // Home.js
 const tg = window.Telegram.WebApp;
 import { useEffect } from "react";
-import SliderCategories from "./sliderCategories";
+
+import DropdownMenu from "./dropdown";
 function Home() {
   useEffect(() => {
     tg.ready();
@@ -12,7 +13,7 @@ function Home() {
   };
   return (
     <div>
-      <div className="h-screen text-white text-base">
+      <div className="h-screen text-white text-base font-oswald font-semibold [text-shadow:_0_1px_0_rgb(0_0_0_/_90%)]">
         <div className="flex flex-row text-black bg-white justify-between h-12">
           <p className="m-2 ml-5 text-xl ">Здбибанка Бот</p>
           <button className="bg-slate-200 w-24" onClick={onClose}>
@@ -26,9 +27,7 @@ function Home() {
         </div>
         <div className="bg-slate-800  h-72">
           <p>Блок з питаннями</p>
-          <div className="w-screen h-[160px] px-8 bg-black ">
-            <SliderCategories />
-          </div>
+          <DropdownMenu />
           <p>Питання (порядковий номер запитання)</p>
           <p>Шкала відповідей 1-5 (позначки з смайликами )</p>
         </div>
