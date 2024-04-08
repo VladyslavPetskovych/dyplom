@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "concurrently \"cd server && npm run dev\" \"cd webapp && npm run dev\"",
+    "dev": "concurrently \"cd server && npm run dev\" \"cd webapp && npm run dev\" \" cd telegramBot && npm run dev\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

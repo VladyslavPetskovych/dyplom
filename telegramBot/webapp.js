@@ -12,9 +12,9 @@ bot.on("message", async (msg) => {
     //     keyboard: [[{ text: "Відкрити додаток", web_app: { url: webappUrl } }]],
     //   },
     // });
-    await bot.sendMessage(chatId, "Відкрити веб програму", {
+    await bot.sendMessage(chatId, "Відкрити програму 👇", {
       reply_markup: {
-        inline_keyboard: [[{ text: "Відкрити додаток", web_app: { url: webappUrl } }]],
+        inline_keyboard: [[{ text: "Веб-додаток", web_app: { url: webappUrl } }]],
       },
     });
   }
