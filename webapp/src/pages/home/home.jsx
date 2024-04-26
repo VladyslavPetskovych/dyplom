@@ -32,7 +32,11 @@ function Home() {
         </div>
 
         <Questions />
-        <pre>{JSON.stringify(tg.initDataUnsafe.chatId, null, 2)}</pre>
+        <pre className="mt-[1000px]">{JSON.stringify(tg.initDataUnsafe.chatId, null, 2)}</pre>
+        <p>--------------</p>
+        <pre className="mt-[1000px]">{JSON.stringify(tg.initDataUnsafe, null, 2)}</pre>
+        -------------------
+        <pre className="mt-[1000px]">{JSON.stringify(tg.initData, null, 2)}</pre>
       </div>
     </div>
   );
