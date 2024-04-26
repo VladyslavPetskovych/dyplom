@@ -2,8 +2,6 @@ const bot = require("../bot");
 const webappUrl = "https://dyplomstaticfrontend.netlify.app";
 const addNewUser = require("./addNewUser");
 
-
-
 const start = () => {
   bot.setMyCommands([
     { command: "/start", description: "Запустити бота" },
@@ -29,7 +27,9 @@ const start = () => {
           " \n\n/info - Більше інорфмації. \n\n/form - Розказати про себе. \n\n Відкрити Веб-додаток -->> /openWeb",
         {
           reply_markup: {
-            keyboard: [[{ text: "Веб-додаток", web_app: { url: url } }]],
+            keyboard: [
+              [{ text: "Веб-додаток", web_app: { url: url, initData: JSON.stringify(initData) } }]
+            ],
           },
         }
       );

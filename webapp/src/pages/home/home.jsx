@@ -1,4 +1,3 @@
-// Home.js
 const tg = window.Telegram.WebApp;
 import { useEffect } from "react";
 import Questions from "./questionsCard";
@@ -33,10 +32,7 @@ function Home() {
         </div>
 
         <Questions />
-        <pre className="mt-[1000px]">{JSON.stringify(tg.initData, null, 2)}</pre>
         <pre>{JSON.stringify(tg.initDataUnsafe.chatId, null, 2)}</pre>
-        <pre>{JSON.stringify(tg.initDataUnsafe.userId, null, 2)}</pre>
-        <pre>{JSON.stringify(tg.initDataUnsafe, null, 2)}</pre>
       </div>
     </div>
   );
