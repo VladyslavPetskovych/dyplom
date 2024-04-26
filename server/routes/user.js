@@ -48,6 +48,11 @@ router.get("/answer", async (req, res) => {
   try {
     const { chatId, questionId, answer } = req.query;
 
+    console.log("users/answer")
+    console.log("users/answer")
+    console.log(chatId)
+    console.log(questionId)
+    console.log(answer)
     // Check if chatId and questionId are provided
     if (!chatId || !questionId || !answer) {
       return res.status(400).json({ message: "chatId, questionId, and answer are required" });
