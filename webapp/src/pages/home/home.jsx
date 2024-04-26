@@ -1,32 +1,19 @@
+// Home.js
 const tg = window.Telegram.WebApp;
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Questions from "./questionsCard";
+
 import axios from "axios"
-
-function onTgReady(tg) {
-  const userId = tg.initDataUnsafe.user.id;
-  setId(userId);
-}
-
 function Home() {
-  const [id, setId] = useState();
-
   useEffect(() => {
     tg.ready();
-
-    if (window.Telegram && window.Telegram.WebApp) {
-      onTgReady(window.Telegram.WebApp);
-    } else {
-      window.addEventListener('telegram_web_app_on_ready', (event) => {
-        onTgReady(event.detail);
-      });
-    }
+    
   },[]);
 
   const onClose = () => {
     tg.close();
   };
-
+  console.log(tg.initDataUnsafe)
   return (
     <div>
       <div className="h-screen text-white text-base font-oswald font-semibold [text-shadow:_0_1px_0_rgb(0_0_0_/_90%)]">
@@ -46,10 +33,6 @@ function Home() {
         </div>
 
         <Questions />
-        <p>User ID: {id}</p>
-        <p>User ID: {id}</p>
-        <p>User ID: {id}</p>
-        <p>User ID: {id}</p>
       </div>
     </div>
   );
