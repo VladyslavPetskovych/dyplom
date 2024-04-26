@@ -8,16 +8,12 @@ router.post("/", async (req, res) => {
   try {
     const { chatId, name } = req.body;
     console.log(name);
-    // Check if user with the provided chatId already exists
     let existingUser = await urModel.findOne({ chatId });
-
     if (existingUser) {
-      // If user exists, update the user's data
       existingUser.name = name;
       await existingUser.save();
       res.send("User data updated successfully");
     } else {
-      // If user does not exist, create a new user
       const newUser = new urModel({
         chatId: chatId,
         name: name,
@@ -32,16 +28,52 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", (res, req) => {
-  res.send("User List");
+router.get("/:chatId", async (req, res) => {
+  try {
+    const chatId = req.params.chatId;
+    const user = await urModel.findOne({ chatId });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ user });
+  } catch (error) {
+    console.error("Error retrieving user data:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
-router.get("/new", (res, req) => {
-  res.send("new user");
+router.get("/answer", async (req, res) => {
+  try {
+    const { chatId, questionId, answer } = req.query;
+
+    // Check if chatId and questionId are provided
+    if (!chatId || !questionId || !answer) {
+      return res.status(400).json({ message: "chatId, questionId, and answer are required" });
+    }
+
+    // Find the user by chatId
+    const user = await urModel.findOne({ chatId });
+
+    // Check if user exists
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update user's answers object with the new answer
+    user.answers[questionId] = answer;
+
+    // Save the updated user data
+    await user.save();
+
+    res.json({ message: "Answer added successfully" });
+  } catch (error) {
+    console.error("Error adding answer:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
-router.get("/:id", (req, res) => {
-  res.send(`Get user with ID ${req.params.id}`);
-});
+
 
 module.exports = router;

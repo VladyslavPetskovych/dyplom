@@ -9,7 +9,7 @@ const DropdownMenu = () => {
 
   return (
     <div className="">
-      <div className="w-screen h-10 px-8 " onClick={toggleDropdown}>
+      <div className="w-screen h-10  " onClick={toggleDropdown}>
         <p className="w-36 bg-black h-9">⚪ Категорії ⇩</p>
         
       </div>

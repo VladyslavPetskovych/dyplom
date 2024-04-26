@@ -1,29 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DropdownMenu from "./dropdown";
-import Rating from "./rating";
-
-function Question({ question, onNext }) {
-  const [answer, setAnswer] = useState("");
-
-  const handleAnswer = () => {
-
-    onNext();
-  };
-
-  return (
-    <div>
-      <p>{question.questionText}</p>
-      <Rating/>
-      <input
-        type="text"
-        value={answer}
-        onChange={(e) => setAnswer(e.target.value)}
-      />
-      <button onClick={handleAnswer}>Submit</button>
-    </div>
-  );
-}
+import Question from "./question";
 
 function Questions() {
   const [questions, setQuestions] = useState([]);
@@ -47,10 +25,10 @@ function Questions() {
   };
 
   return (
-    <div>
-      <div className="bg-slate-800 h-96">
+    <div className="">
+      <div className="bg-green-800 h-96 flex flex-col items-center justify-start">
         <p>
-          Дай відповіді на питання про все підряд, щоб знайти схожих на себе
+          Дай відповіді на питання і бот знайде схожих на тебе
           людей.
         </p>
         <div>
@@ -64,8 +42,8 @@ function Questions() {
               onNext={handleNextQuestion}
             />
           )}
-          <p>Шкала відповідей 1-5 (позначки з смайликами)</p>
         </div>
+        
       </div>
     </div>
   );
