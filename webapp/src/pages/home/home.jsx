@@ -33,7 +33,7 @@ function Home() {
         </div>
 
         <Questions />
-        <pre>{JSON.stringify(tg.initDataUnsafe, null, 2)}</pre>
+        <pre>{JSON.stringify(tg.initData, null, 2)}</pre>
         <pre>{JSON.stringify(tg.initDataUnsafe, null, 2)}</pre>
         <pre>{JSON.stringify(tg.initDataUnsafe, null, 2)}</pre>
         <pre>{JSON.stringify(tg.initDataUnsafe, null, 2)}</pre>
