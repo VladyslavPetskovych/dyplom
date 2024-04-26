@@ -13,7 +13,7 @@ function Home() {
   const onClose = () => {
     tg.close();
   };
-  console.log(tg.initDataUnsafe)
+  
   return (
     <div>
       <div className="h-screen text-white text-base font-oswald font-semibold [text-shadow:_0_1px_0_rgb(0_0_0_/_90%)]">
@@ -33,6 +33,8 @@ function Home() {
         </div>
 
         <Questions />
+        {  console.log(tg.initDataUnsafe)}
+        {tg.initDataUnsafe}
       </div>
     </div>
   );
