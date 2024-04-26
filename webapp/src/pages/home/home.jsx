@@ -33,8 +33,10 @@ function Home() {
         </div>
 
         <Questions />
-        {  console.log(tg.initDataUnsafe)}
-        {tg.initDataUnsafe}
+        <pre>{JSON.stringify(tg.initDataUnsafe, null, 2)}</pre>
+        <pre>{JSON.stringify(tg.initDataUnsafe, null, 2)}</pre>
+        <pre>{JSON.stringify(tg.initDataUnsafe, null, 2)}</pre>
+        <pre>{JSON.stringify(tg.initDataUnsafe, null, 2)}</pre>
       </div>
     </div>
   );
