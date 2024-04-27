@@ -11,8 +11,8 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     tg.ready();
-    dispatch(setChatId(tg.initDataUnsafe.user.id));
-    // dispatch(setChatId(938729564));
+    //dispatch(setChatId(tg.initDataUnsafe.user.id));
+     dispatch(setChatId(938729564));
   }, []);
   return (
     <BrowserRouter>
