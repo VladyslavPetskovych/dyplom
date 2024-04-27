@@ -10,6 +10,7 @@ function Profile() {
   const [userData, setUserData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const chatId = useSelector((state) => state.user.chatId);
+  console.log(typeof chatId)
   useEffect(() => {
     const fetchData = async () => {
       const response = await axios.get(`http://localhost:3000/users/${chatId}`);

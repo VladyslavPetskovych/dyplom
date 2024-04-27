@@ -14,7 +14,7 @@ function Question({ question, onNext }) {
         console.error("Rating is required");
         return;
       }
-console.log(question.questionNumber)
+      console.log(question.questionNumber);
 
       // Make axios POST request to send the answer to the backend
       await axios.post("http://localhost:3000/users/answer", {
@@ -28,7 +28,7 @@ console.log(question.questionNumber)
     } catch (error) {
       console.error("Error submitting answer:", error);
     }
-    console.log("answer"+rating);
+    console.log("answer" + rating);
 
     setRating(null);
   };
