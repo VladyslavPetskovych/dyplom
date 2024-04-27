@@ -44,7 +44,8 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const questionId = req.params.id;
-
+console.log(questionId);
+console.log(typeof questionId)
     const question = await Question.findById(questionId);
 
     if (!question) {
