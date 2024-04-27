@@ -16,7 +16,7 @@ function Profile() {
       setUserData(response.data.user);
     };
     fetchData();
-  }, [chatId]);
+  }, []);
 
   const handleEditClick = () => {
     setIsModalOpen(true);
@@ -33,6 +33,7 @@ function Profile() {
         <div className="flex flex-row">
           <p className="px-1 bg-neutral-300">Псевдо </p>
           <p>{userData.name}</p>
+          <p>{chatId}</p>
         </div>
         <button className="bg-amber-100" onClick={handleEditClick}>
           Редагувати
