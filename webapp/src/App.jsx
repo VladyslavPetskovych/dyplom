@@ -8,13 +8,12 @@ import FooterMenu from "./component/footerMenu";
 import { useDispatch } from "react-redux";
 import { setChatId } from "./redux/store";
 function App() {
+  const dispatch = useDispatch();
   useEffect(() => {
     tg.ready();
+    dispatch(setChatId(tg.initDataUnsafe.user.id));
+    // dispatch(setChatId(938729564));
   }, []);
-
-  const dispatch = useDispatch();
-  dispatch(setChatId(tg.initDataUnsafe.user.id));
-  // dispatch(setChatId(938729564));
   return (
     <BrowserRouter>
       <Routes>
