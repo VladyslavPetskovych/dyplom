@@ -32,10 +32,7 @@ function Questions() {
         <div>
           <DropdownMenu />
         </div>
-        <Question
-              question={questions[currentQuestionIndex]}
-              onNext={handleNextQuestion}
-            />
+        
         <div>
           {questions.length > 0 && currentQuestionIndex < questions.length && (
             <Question
