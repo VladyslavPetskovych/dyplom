@@ -1,17 +1,9 @@
-const tg = window.Telegram.WebApp;
+
 import { useEffect } from "react";
 import Questions from "./questionsCard";
 
 
 function Home() {
-
-  useEffect(() => {
-    tg.ready();
-  }, []);
-
-  const onClose = () => {
-    tg.close();
-  };
 
   return (
     <div>
@@ -21,7 +13,7 @@ function Home() {
             <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-green-400 opacity-50"></span>
             🟡 Здибанка Бот
           </p>
-          <button className="bg-slate-200 w-24" onClick={onClose}>
+          <button className="bg-slate-200 w-24" >
             ❌
           </button>
         </div>
