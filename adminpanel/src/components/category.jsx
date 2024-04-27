@@ -46,7 +46,7 @@ function Category() {
       <div className="flex flex-col items-center justify-center mt-8">
         <div className="flex flex-row">
           {categoryList.map((category) => (
-            <p className="bg-green-100 m-1" key={category._id}>{category.category_name}</p>
+            <p className="bg-green-100 m-1 p-1 rounded-full border-2 border-orange-200" key={category._id}>{category.category_name}</p>
           ))}
         </div>
 

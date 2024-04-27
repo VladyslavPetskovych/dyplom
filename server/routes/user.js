@@ -43,33 +43,46 @@ router.get("/:chatId", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-
-router.get("/answer", async (req, res) => {
+router.post("/answer", async (req, res) => {
   try {
-    const { chatId, questionId, answer } = req.query;
+    const { chatId, questionId, answer } = req.body;
 
-    console.log("users/answer")
-    console.log("users/answer")
-    console.log(chatId)
-    console.log(questionId)
-    console.log(answer)
-    // Check if chatId and questionId are provided
+    console.log("Received data:", { chatId, questionId, answer });
+
+    // Check if chatId, questionId, and answer are provided
     if (!chatId || !questionId || !answer) {
-      return res.status(400).json({ message: "chatId, questionId, and answer are required" });
+      return res
+        .status(400)
+        .json({ message: "chatId, questionId, and answer are required" });
     }
 
-    // Find the user by chatId
-    const user = await urModel.findOne({ chatId });
+    // Find the user by chatId or create a new one if not found
+    let user = await urModel.findOne({ chatId });
 
-    // Check if user exists
     if (!user) {
-      return res.status(404).json({ message: "User not found" });
+      user = new urModel({ chatId, answers: [] }); // Initialize answers as an empty array
     }
 
-    // Update user's answers object with the new answer
-    user.answers[questionId] = answer;
+    // Convert questionId and answer to numbers
+    const questionIdNum = parseInt(questionId);
+    const answerNum = parseInt(answer);
 
-    // Save the updated user data
+    // Check if the questionId already exists in answers array
+    const existingAnswerIndex = user.answers.findIndex((ans) => {
+      console.log("Answer:", ans);
+      console.log("Comparison:", ans.questionId, questionIdNum);
+      return ans.questionId === questionIdNum;
+    });
+    console.log("Existing Answer Index:", existingAnswerIndex);
+
+    if (existingAnswerIndex !== -1) {
+      // If the questionId already exists, update the answer
+      user.answers[existingAnswerIndex].answer = answerNum;
+    } else {
+      // If the questionId doesn't exist, add a new answer
+      user.answers.push({ questionId: questionIdNum, answer: answerNum });
+    }
+
     await user.save();
 
     res.json({ message: "Answer added successfully" });
@@ -78,7 +91,6 @@ router.get("/answer", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
-
 
 
 module.exports = router;

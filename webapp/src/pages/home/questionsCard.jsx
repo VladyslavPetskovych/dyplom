@@ -21,16 +21,14 @@ function Questions() {
   }, []);
 
   const handleNextQuestion = () => {
+    // Increment the current question index
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
   };
 
   return (
     <div className="">
       <div className="bg-green-800 h-96 flex flex-col items-center justify-start">
-        <p>
-          Дай відповіді на питання і бот знайде схожих на тебе
-          людей.
-        </p>
+        <p>Дай відповіді на питання і бот знайде схожих на тебе людей.</p>
         <div>
           <DropdownMenu />
         </div>
@@ -43,7 +41,6 @@ function Questions() {
             />
           )}
         </div>
-        
       </div>
     </div>
   );

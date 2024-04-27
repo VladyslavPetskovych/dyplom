@@ -12,7 +12,7 @@ const questionSchema = mongoose.Schema(
       unique: true, // Забезпечує, що питання не повторюються
     },
     category_id: {
-      type: String,
+      type: Number,
     },
   },
   { timestamps: true }

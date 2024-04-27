@@ -6,11 +6,22 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    name: { type: String },
-    answers: {
-      type: Object,
-      default: {},
+    name: {
+      type: String,
     },
+    answers: [
+      {
+        _id: false,
+        questionId: {
+          type: Number,
+          required: true,
+        },
+        answer: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

@@ -15,8 +15,7 @@ function Question({ question, onNext }) {
         return;
       }
 console.log(question.questionNumber)
-console.log(question.questionNumber)
-console.log(question.questionNumber)
+
       // Make axios POST request to send the answer to the backend
       await axios.post("http://localhost:3000/users/answer", {
         chatId,
@@ -29,8 +28,8 @@ console.log(question.questionNumber)
     } catch (error) {
       console.error("Error submitting answer:", error);
     }
-    console.log(rating);
-    onNext(rating);
+    console.log("answer"+rating);
+
     setRating(null);
   };
 

@@ -7,6 +7,7 @@ import { setChatId } from "../../../src/redux/store";
 function Home() {
   const dispatch = useDispatch();
   dispatch(setChatId(tg.initDataUnsafe.user.id));
+ // dispatch(setChatId(938729564));
   useEffect(() => {
     tg.ready();
   }, []);
