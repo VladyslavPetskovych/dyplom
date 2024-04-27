@@ -1,10 +1,9 @@
-
 import { useEffect } from "react";
 import Questions from "./questionsCard";
-
+import { useSelector } from "react-redux";
 
 function Home() {
-
+  const chatId = useSelector((state) => state.user.chatId);
   return (
     <div>
       <div className="h-screen text-white text-base font-oswald font-semibold [text-shadow:_0_1px_0_rgb(0_0_0_/_90%)]">
@@ -13,9 +12,7 @@ function Home() {
             <span className="animate-ping absolute inline-flex h-2 w-2 rounded-full bg-green-400 opacity-50"></span>
             🟡 Здибанка Бот
           </p>
-          <button className="bg-slate-200 w-24" >
-            ❌
-          </button>
+          <button className="bg-slate-200 w-24">❌</button>
         </div>
         <div className="bg-slate-500 h-32 flex flex-col items-center justify-center">
           <p>Блок статистики</p>
@@ -24,16 +21,7 @@ function Home() {
         </div>
 
         <Questions />
-        {/* <pre className="mt-[1000px]">
-          {JSON.stringify(tg.initDataUnsafe.user.id, null, 2)}
-        </pre>
-        <p>--------------</p>
-        <pre className="">
-          {JSON.stringify(tg.initDataUnsafe.user, null, 2)}
-        </pre>
-        <pre className="mt-[1000px]">
-          {JSON.stringify(tg.initDataUnsafe, null, 2)}
-        </pre> */}
+        
       </div>
     </div>
   );

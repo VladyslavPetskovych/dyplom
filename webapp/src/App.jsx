@@ -6,13 +6,12 @@ import Communities from "./pages/communities";
 import Profile from "./pages/profile/profile";
 import FooterMenu from "./component/footerMenu";
 import { useDispatch } from "react-redux";
-import { setChatId } from "../src/redux/store";
+import { setChatId } from "./redux/store";
 function App() {
   useEffect(() => {
     tg.ready();
   }, []);
 
-  
   const dispatch = useDispatch();
   dispatch(setChatId(tg.initDataUnsafe.user.id));
   // dispatch(setChatId(938729564));
@@ -24,6 +23,15 @@ function App() {
         <Route path="/profile" element={<Profile />} />
       </Routes>
       <FooterMenu />
+      <p>{tg.initDataUnsafe.user.id}</p>
+      <pre className="mt-[1000px]">
+        {JSON.stringify(tg.initDataUnsafe.user.id, null, 2)}
+      </pre>
+      <p>--------------</p>
+      <pre className="">{JSON.stringify(tg.initDataUnsafe.user, null, 2)}</pre>
+      <pre className="mt-[1000px]">
+        {JSON.stringify(tg.initDataUnsafe, null, 2)}
+      </pre>
     </BrowserRouter>
   );
 }
