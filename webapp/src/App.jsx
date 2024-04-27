@@ -25,7 +25,7 @@ function App() {
       <FooterMenu />
       <p>{tg.initDataUnsafe.user.id}</p>
       <pre className="mt-[1000px]">
-        {JSON.stringify(tg.initData, null, 2)}
+        {JSON.stringify(tg.initData.user, null, 2)}
       </pre>
       <p>--------------</p>
       <pre className="">{JSON.stringify(tg.initDataUnsafe.user, null, 2)}</pre>
