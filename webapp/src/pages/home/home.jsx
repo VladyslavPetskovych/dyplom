@@ -1,13 +1,10 @@
 const tg = window.Telegram.WebApp;
 import { useEffect } from "react";
 import Questions from "./questionsCard";
-import { useDispatch } from "react-redux";
-import { setChatId } from "../../../src/redux/store";
+
 
 function Home() {
-  const dispatch = useDispatch();
-  dispatch(setChatId(tg.initDataUnsafe.user.id));
- // dispatch(setChatId(938729564));
+
   useEffect(() => {
     tg.ready();
   }, []);
@@ -35,7 +32,7 @@ function Home() {
         </div>
 
         <Questions />
-        <pre className="mt-[1000px]">
+        {/* <pre className="mt-[1000px]">
           {JSON.stringify(tg.initDataUnsafe.user.id, null, 2)}
         </pre>
         <p>--------------</p>
@@ -44,7 +41,7 @@ function Home() {
         </pre>
         <pre className="mt-[1000px]">
           {JSON.stringify(tg.initDataUnsafe, null, 2)}
-        </pre>
+        </pre> */}
       </div>
     </div>
   );

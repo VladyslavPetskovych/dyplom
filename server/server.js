@@ -12,10 +12,12 @@ app.get("/", (req, res) => {
 
 const useRouter = require("./routes/user");
 const qRouter = require("./routes/question");
-const catRouter = require("./routes/category");
+const categoryRouter = require("./routes/category");
+const profileRouter = require("./routes/profile");
 
 app.use("/users", useRouter);
 app.use("/questions", qRouter);
-app.use("/category", catRouter);
+app.use("/category", categoryRouter);
+app.use("/profile", profileRouter);
 
 app.listen(3000);
