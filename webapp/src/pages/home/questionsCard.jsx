@@ -9,14 +9,13 @@ function Questions() {
 
   useEffect(() => {
     const fetchQuestions = async () => {
-      // try {
-      //   const response = await axios.get("http://localhost:3000/questions");
-      //   setQuestions(response.data);
-      // } catch (error) {
-      //   console.error("Error fetching questions:", error);
-      // }
-      const response = await axios.get("https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/getprices/setPrice");
-      setQuestions(response.data);
+      try {
+        const response = await axios.get("http://localhost:3002/dyp/questions");
+        setQuestions(response.data);
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
+
     };
 
     fetchQuestions();
@@ -34,7 +33,6 @@ function Questions() {
         <div>
           <DropdownMenu />
         </div>
-        <pre>{JSON.stringify(questions, null, 2)}</pre>
         <div>
           {questions.length > 0 && currentQuestionIndex < questions.length && (
             <Question

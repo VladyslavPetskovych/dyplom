@@ -5,9 +5,13 @@ const cors = require("cors");
 app.set("view engine", "ejs");
 
 app.use(cors());
-app.get("/", (req, res) => {
+app.use((req, res, next) => {
   res.set("Access-Control-Allow-Origin", "*");
-  res.json({ text: " root!!!!!!!!!!!!!!!!!!!" });
+  next();
+});
+
+app.get("/dyp", (req, res) => {
+  res.json({ text: "root for server3 at port 3002" });
 });
 
 const useRouter = require("./routes/user");
@@ -15,9 +19,9 @@ const qRouter = require("./routes/question");
 const categoryRouter = require("./routes/category");
 const profileRouter = require("./routes/profile");
 
-app.use("/users", useRouter);
-app.use("/questions", qRouter);
-app.use("/category", categoryRouter);
-app.use("/profile", profileRouter);
+app.use("/dyp/users", useRouter);
+app.use("/dyp/questions", qRouter);
+app.use("/dyp/category", categoryRouter);
+app.use("/dyp/profile", profileRouter);
 
-app.listen(3000);
+app.listen(3002);
