@@ -22,7 +22,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
       </Routes>
       <FooterMenu />
-      {/* <p>{tg.initDataUnsafe.user.id}</p>
+      <p>{tg.initDataUnsafe.user.id}</p>
       <pre className="mt-[1000px]">
         {JSON.stringify(tg.initData.user, null, 2)}
       </pre>
@@ -30,7 +30,7 @@ function App() {
       <pre className="">{JSON.stringify(tg.initDataUnsafe.user, null, 2)}</pre>
       <pre className="mt-[1000px]">
         {JSON.stringify(tg.initDataUnsafe, null, 2)}
-      </pre> */}
+      </pre>
     </BrowserRouter>
   );
 }
