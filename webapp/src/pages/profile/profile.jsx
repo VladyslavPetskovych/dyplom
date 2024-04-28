@@ -10,14 +10,19 @@ function Profile() {
   const [userData, setUserData] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const chatId = useSelector((state) => state.user.chatId);
-  console.log(typeof chatId)
+  console.log(typeof chatId);
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/users/${chatId}`);
-      setUserData(response.data.user);
+      if (chatId) {
+        console.log(chatId);
+        const response = await axios.get(
+          `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/users/${chatId}`
+        );
+        setUserData(response.data.user);
+      }
     };
     fetchData();
-  }, []);
+  }, [chatId]);
 
   const handleEditClick = () => {
     setIsModalOpen(true);
@@ -40,8 +45,13 @@ function Profile() {
           Редагувати
         </button>
         {isModalOpen && (
-          // Pass isOpen prop with isModalOpen value to EditModal
-          <EditModal onClose={handleCloseModal} isOpen={isModalOpen}  userData={userData} />
+
+          <EditModal
+            onClose={handleCloseModal}
+            isOpen={isModalOpen}
+            userData={userData}
+            setUserData={setUserData}
+          />
         )}
       </div>
     </div>

@@ -3,7 +3,7 @@ import EditImg from "./editImg";
 import axios from "axios";
 import { useState } from "react";
 
-function EditModal({ isOpen, onClose, userData }) {
+function EditModal({ isOpen, onClose, userData,setUserData }) {
   const [newName, setNewName] = useState(userData.name);
   const handleOutsideClick = (e) => {
     if (e.target === e.currentTarget) {
@@ -12,7 +12,7 @@ function EditModal({ isOpen, onClose, userData }) {
   };
   const saveData = () => {
     console.log(userData.chatId); //938729564
-
+    setUserData({...userData, name: newName});
     console.log(newName); //Bladdfdfddd
     const chatId = userData.chatId;
     axios.put(`https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/profile/edit/${chatId}`, {
