@@ -13,7 +13,7 @@ function Profile() {
   console.log(typeof chatId)
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(`http://localhost:3000/users/${chatId}`);
+      const response = await axios.get(`https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/users/${chatId}`);
       setUserData(response.data.user);
     };
     fetchData();

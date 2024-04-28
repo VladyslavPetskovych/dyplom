@@ -15,7 +15,7 @@ function EditModal({ isOpen, onClose, userData }) {
 
     console.log(newName); //Bladdfdfddd
     const chatId = userData.chatId;
-    axios.put(`http://localhost:3000/profile/edit/${chatId}`, {
+    axios.put(`https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/profile/edit/${chatId}`, {
       name: newName,
     });
   };
