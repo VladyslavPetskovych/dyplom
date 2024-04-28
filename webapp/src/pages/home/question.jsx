@@ -17,7 +17,7 @@ function Question({ question, onNext }) {
       console.log(question.questionNumber);
 
       // Make axios POST request to send the answer to the backend
-      await axios.post("http://localhost:3002/dyp/users/answer", {
+      await axios.post("http://localhost:3002/server3/users/answer", {
         chatId,
         questionId: question.questionNumber, // Assuming question has an _id property
         answer: rating, // Send the selected rating as the answer

@@ -10,7 +10,7 @@ function Questions() {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const response = await axios.get("http://localhost:3002/dyp/questions");
+        const response = await axios.get("http://localhost:3002/server3/questions");
         setQuestions(response.data);
       } catch (error) {
         console.error("Error fetching questions:", error);
