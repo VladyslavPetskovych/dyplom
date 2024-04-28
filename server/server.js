@@ -10,7 +10,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.get("/dyp", (req, res) => {
+app.get("/server3", (req, res) => {
   res.json({ text: "root for server3 at port 3002" });
 });
 
@@ -19,10 +19,10 @@ const qRouter = require("./routes/question");
 const categoryRouter = require("./routes/category");
 const profileRouter = require("./routes/profile");
 
-app.use("/dyp/users", useRouter);
-app.use("/dyp/questions", qRouter);
-app.use("/dyp/category", categoryRouter);
-app.use("/dyp/profile", profileRouter);
+app.use("/server3/users", useRouter);
+app.use("/server3/questions", qRouter);
+app.use("/server3/category", categoryRouter);
+app.use("/server3/profile", profileRouter);
 
 app.listen(3002, () => {
   console.log('Express server is running on port 3002');
