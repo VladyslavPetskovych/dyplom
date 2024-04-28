@@ -28,7 +28,7 @@ function Profile() {
   };
 
   return (
-    <div className="h-screen bg-neutral-200 p-5 flex justify-center ">
+    <div className="h-screen bg-neutral-200 text-white p-5 flex justify-center ">
       <div className="flex flex-col items-center">
         <img className="h-32 w-32 rounded-full" src={userpic} alt="" />
         <div className="flex flex-row">

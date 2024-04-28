@@ -33,7 +33,6 @@ function Questions() {
         <div>
           <DropdownMenu />
         </div>
-        <pre className="">{JSON.stringify(questions, null, 2)}</pre>
         <div>
           {questions.length > 0 && currentQuestionIndex < questions.length && (
             <Question
