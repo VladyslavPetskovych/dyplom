@@ -4,7 +4,7 @@ const addNewUser = async (chatId, name) => {
   try {
     console.log("Creating new user !!!" + chatId);
     console.log("user name  " + name);
-    const response = await axios.post("http://localhost:3000/users/", {
+    const response = await axios.post("http://localhost:3002/dyp/users/", {
       chatId,
       name,
     });
