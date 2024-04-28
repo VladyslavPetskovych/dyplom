@@ -24,4 +24,7 @@ app.use("/dyp/questions", qRouter);
 app.use("/dyp/category", categoryRouter);
 app.use("/dyp/profile", profileRouter);
 
-app.listen(3002);
+app.listen(3002, '0.0.0.0', () => {
+  console.log('Express server is running on port 3002');
+});
+
