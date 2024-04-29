@@ -8,18 +8,17 @@ const DropdownMenu = () => {
   };
 
   return (
-    <div className="">
-      <div className="w-screen h-10  " onClick={toggleDropdown}>
-        <p className="w-36 bg-black h-9">⚪ Категорії ⇩</p>
-        
+    <div className="w-full m-2 p-1 ">
+      <div className=" h-12 w-full ">
+        <button className="w-36 bg-black h-9" onClick={toggleDropdown}>
+          ⚪ Категорії ⇩
+        </button>
       </div>
       {isOpen && (
-        <div className=" top-full left-0 w-screen bg-black shadow-md ">
-          <div className="w-screen h-[160px] px-8 ">
+        <div className=" top-full left-0 w-[97vw] m-1 bg-black shadow-md ">
+          <div className="w-full h-[160px] px-8 ">
             <SliderCategories />
           </div>
-
-        
         </div>
       )}
     </div>

@@ -1,10 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
-function Rating({ onRatingSelect }) {
-  const [selectedRating, setSelectedRating] = useState(null);
-
+function Rating({ selectedRating, onRatingSelect }) {
   const handleRatingSelect = (value) => {
-    setSelectedRating(value);
     onRatingSelect(value);
   };
 
