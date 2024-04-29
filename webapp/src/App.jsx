@@ -11,8 +11,8 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     tg.ready();
-    dispatch(setChatId(tg.initDataUnsafe.user.id));
-    //dispatch(setChatId(938729564));
+    //dispatch(setChatId(tg.initDataUnsafe.user.id));
+    dispatch(setChatId(938729564));
   }, []);
   return (
     <BrowserRouter>
@@ -24,7 +24,7 @@ function App() {
       <FooterMenu />
 
       <div>
-        <p>{tg.initDataUnsafe.user.id}</p>
+        {/* <p>{tg.initDataUnsafe.user.id}</p>
         <pre className="mt-[1000px] text-white">
           {JSON.stringify(tg.initData.user, null, 2)}
         </pre>
@@ -34,7 +34,7 @@ function App() {
         </pre>
         <pre className="mt-[1000px]">
           {JSON.stringify(tg.initDataUnsafe, null, 2)}
-        </pre>
+        </pre> */}
       </div>
     </BrowserRouter>
   );
