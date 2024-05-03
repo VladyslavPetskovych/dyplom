@@ -7,38 +7,47 @@ router.use(express.json());
 router.post("/", async (req, res) => {
   try {
     const { chatId, name } = req.body;
-
-    // Check if the user exists
+    console.log(name + " route is running for initializing user!");
+    
+    // Check if the user already exists
     let existingUser = await urModel.findOne({ chatId });
-
+    
     if (existingUser) {
-      // Case 2: User exists and we want to edit the name
-      if (name !== undefined && name !== null) {
-        existingUser.name = name;
-        await existingUser.save();
-        return res.send("User data updated successfully");
-      } else {
-        // Case 1: User exists but doesn't have a name yet
-        return res.status(400).send("User already exists but name is missing");
-      }
+      return res.status(400).send("User already exists");
     } else {
-      // Case 1: User doesn't exist, create new user
-      if (name !== undefined && name !== null) {
-        const newUser = new urModel({
-          chatId: chatId,
-          name: name,
-        });
+      const newUser = new urModel({
+        chatId: chatId,
+        name: name,
+      });
 
-        await newUser.save();
-        return res.send("User created successfully");
-      } else {
-        // Case 1: User doesn't exist and name is missing
-        return res.status(400).send("Name is required to create a new user");
-      }
+      await newUser.save();
+      res.send("User created successfully with name: " + name);
     }
   } catch (err) {
     console.error(err);
-    res.status(500).send("Error creating/updating user");
+    res.status(500).send("Error initializing user");
+  }
+});
+
+router.post("/edit", async (req, res) => {
+  try {
+    const { chatId, name } = req.body;
+    console.log(name + " route is running for editing user's name!");
+
+    // Find the user by chatId
+    let existingUser = await urModel.findOne({ chatId });
+    
+    if (!existingUser) {
+      return res.status(404).send("User not found");
+    } else {
+      // Update the user's name
+      existingUser.name = name;
+      await existingUser.save();
+      res.send("User's name updated successfully to: " + name);
+    }
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error editing user's name");
   }
 });
 
