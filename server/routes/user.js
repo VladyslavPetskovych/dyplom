@@ -4,14 +4,15 @@ const urModel = require("../models/users");
 
 router.use(express.json());
 
+
 router.post("/", async (req, res) => {
   try {
     const { chatId, name } = req.body;
     console.log(name + " route is running for initializing user!");
-    
+
     // Check if the user already exists
     let existingUser = await urModel.findOne({ chatId });
-    
+
     if (existingUser) {
       return res.status(200).send("User already exists");
     } else {
@@ -36,7 +37,7 @@ router.post("/edit", async (req, res) => {
 
     // Find the user by chatId
     let existingUser = await urModel.findOne({ chatId });
-    
+
     if (!existingUser) {
       return res.status(404).send("User not found");
     } else {
@@ -51,8 +52,17 @@ router.post("/edit", async (req, res) => {
   }
 });
 
+router.get("/all", async (req, res) => {
+  try {
+    const userss = await urModel.find();
+    res.json({ userss });
+  } catch (error) {
+    console.error("Error retrieving users:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+});
 
-router.get("/:chatId", async (req, res) => {
+router.get("/getUser/:chatId", async (req, res) => {
   try {
     const chatId = req.params.chatId;
     const user = await urModel.findOne({ chatId });
@@ -67,6 +77,7 @@ router.get("/:chatId", async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
+
 router.post("/answer", async (req, res) => {
   try {
     const { chatId, questionId, answer } = req.body;

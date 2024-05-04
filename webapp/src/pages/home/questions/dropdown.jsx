@@ -8,7 +8,7 @@ const DropdownMenu = () => {
   };
 
   return (
-<div className=" w-[97vw] p-1">
+<div className=" w-[96vw] p-1">
   <div className="h-12">
     <button
       className="w-150px border border-sky-600 bg-black h-9 transition-all duration-300"

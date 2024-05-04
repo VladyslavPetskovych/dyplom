@@ -9,6 +9,7 @@ function QuestionsCard() {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
+  const [unansweredQuestionsList, setUnansweredQuestionsList] = useState([]);
   const chatId = useSelector((state) => state.user.chatId);
 
   useEffect(() => {
@@ -24,8 +25,19 @@ function QuestionsCard() {
             ),
           ]);
 
-          setQuestions(questionsResponse.data);
           setUserAnswers(userAnswersResponse.data);
+
+          // Filter unanswered questions before setting state
+          const unanswered = questionsResponse.data.filter(
+            (question) =>
+              !userAnswersResponse.data.some(
+                (answer) => answer.questionId === question.questionNumber
+              )
+          );
+          setQuestions(unanswered);
+
+          // Set unanswered questions list
+          setUnansweredQuestionsList(unanswered);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -39,29 +51,25 @@ function QuestionsCard() {
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
   };
 
-  const isQuestionAnswered = (questionId) => {
-    //console.log(questionId);
-    return userAnswers.some((answer) => answer.questionId === questionId);
-  };
-
   return (
     <div className="h-[600px] bg-black text-white ">
-      <div className="  flex flex-col items-center justify-start">
+      <div className=" flex flex-col items-center justify-start">
         <p>Дай відповіді на питання і бот знайде схожих на тебе людей.</p>
 
         <DropdownMenu />
         <div className="flex text-white">
           <PrevoiusAnswers />
-          <div className="bg-slate-800 border rounded-lg w-full">
-            {console.log(userAnswers)}
-            {questions.length > 0 && userAnswers.length > 0 && (
+          <div className="bg-slate-800 border rounded-lg w-full m-1">
+            {unansweredQuestionsList.length > 0 &&
+            currentQuestionIndex < unansweredQuestionsList.length ? (
               <Question
-                question={questions[currentQuestionIndex]}
+                question={unansweredQuestionsList[currentQuestionIndex]}
                 onNext={handleNextQuestion}
-                isAnswered={isQuestionAnswered(
-                  questions[currentQuestionIndex]?.id
-                )}
               />
+            ) : (
+              <p className="p-2">
+                Ви уже відповіли на всі запитання. Скоро тут зявляться нові.
+              </p>
             )}
           </div>
         </div>

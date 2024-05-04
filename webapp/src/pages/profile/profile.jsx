@@ -16,7 +16,7 @@ function Profile() {
       if (chatId) {
         console.log(chatId);
         const response = await axios.get(
-          `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/users/${chatId}`
+          `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/users/getUser/${chatId}`
         );
         setUserData(response.data.user);
       }
