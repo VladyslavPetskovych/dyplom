@@ -14,7 +14,16 @@ export default {
         popins: ["Poppins", "sans-serif"],
         oswald: ["Oswald", "sans-serif"],
       },
+      textStrokeWidth: {
+        1: "1px",
+      },
+      textStrokeColor: {
+        current: "currentColor",
+      },
     },
+  },
+  variants: {
+    textStroke: ({ after }) => after(["hover", "focus"]),
   },
   plugins: [],
 };

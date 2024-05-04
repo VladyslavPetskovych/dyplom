@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import DropdownMenu from "../dropdown";
+import DropdownMenu from "./dropdown";
 import Question from "./question";
+import PrevoiusAnswers from "./previousAnswers";
 
-function Questions() {
+function QuestionsCard() {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
 
@@ -28,23 +29,26 @@ function Questions() {
   };
 
   return (
-    <div className="h-[600px] bg-green-900">
+    <div className="h-[600px] bg-black text-white ">
       <div className="  flex flex-col items-center justify-start">
         <p>Дай відповіді на питання і бот знайде схожих на тебе людей.</p>
 
         <DropdownMenu />
-
-        <div>
-          {questions.length > 0 && currentQuestionIndex < questions.length && (
-            <Question
-              question={questions[currentQuestionIndex]}
-              onNext={handleNextQuestion}
-            />
-          )}
+        <div className="flex text-white">
+          <PrevoiusAnswers />
+          <div className="bg-slate-800 border rounded-lg w-full">
+            {questions.length > 0 &&
+              currentQuestionIndex < questions.length && (
+                <Question
+                  question={questions[currentQuestionIndex]}
+                  onNext={handleNextQuestion}
+                />
+              )}
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Questions;
+export default QuestionsCard;

@@ -13,7 +13,7 @@ router.post("/", async (req, res) => {
     let existingUser = await urModel.findOne({ chatId });
     
     if (existingUser) {
-      return res.status(400).send("User already exists");
+      return res.status(200).send("User already exists");
     } else {
       const newUser = new urModel({
         chatId: chatId,

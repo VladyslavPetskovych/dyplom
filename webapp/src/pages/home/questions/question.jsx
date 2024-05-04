@@ -31,14 +31,14 @@ function Question({ question, onNext }) {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center">
-      <div className="flex flex-row justify-between">
-        <p className="m-1">{question.questionNumber}</p>
-        <p className="m-1">{question.questionText}</p>
+    <div className="flex flex-col items-center justify-center  ">
+      <div className="flex flex-col justify-between w-full">
+        <p className="m-1 p-1 text-left">Питання № {question.questionNumber}</p>
+        <p className="p-3 bg-slate-900 min-w-full">{question.questionText}</p>
       </div>
       <Rating selectedRating={rating} onRatingSelect={setRating} />
 
-      <button onClick={handleAnswer}>Відповісти</button>
+      <button onClick={handleAnswer} className="bg-green-600 p-2 rounded-2xl m-2">Відповісти</button>
     </div>
   );
 }
