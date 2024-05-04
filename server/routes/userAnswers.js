@@ -23,6 +23,7 @@ router.get("/getUserAnswers/:chatId", async (req, res) => {
             if (question) {
                 answersWithQuestions.push({
                     questionText: question.questionText,
+                    questionId: question.questionNumber,
                     userAnswer: answer.answer
                 });
             }

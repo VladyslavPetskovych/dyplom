@@ -19,12 +19,14 @@ const qRouter = require("./routes/question");
 const categoryRouter = require("./routes/category");
 const profileRouter = require("./routes/profile");
 const userAnswersRouter = require("./routes/userAnswers");
+const userQuestionsRouter = require("./routes/userQuestions");
 
 app.use("/server3/users", useRouter);
 app.use("/server3/questions", qRouter);
 app.use("/server3/category", categoryRouter);
 app.use("/server3/profile", profileRouter);
 app.use("/server3/userAnswers", userAnswersRouter);
+app.use("/server3/userQuestions", userQuestionsRouter);
 
 app.listen(3002, () => {
   console.log('Express server is running on port 3002');
