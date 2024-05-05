@@ -1,0 +1,52 @@
+/* Adjust container to hide overflow and improve animation */
+.page-container {
+  overflow-x: hidden; /* Hides horizontal scroll during animation */
+  position: relative;
+  width: 100%;
+  min-height: calc(100vh - 48px); /* Adjust based on your actual layout */
+}
+
+/* Improved animations with ease-in-out */
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutLeft {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}

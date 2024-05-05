@@ -22,6 +22,10 @@ const userSchema = mongoose.Schema(
         },
       },
     ],
+    img: {
+      type: String,  
+      default: 'defUser.jpg'    
+    },
   },
   { timestamps: true }
 );

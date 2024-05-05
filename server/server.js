@@ -9,6 +9,7 @@ app.use((req, res, next) => {
   res.set("Access-Control-Allow-Origin", "*");
   next();
 });
+app.use('/usersPics', express.static(path.join(__dirname, 'public', 'usersPics')));
 
 app.get("/server3", (req, res) => {
   res.json({ text: "root for server3 at port 3002" });

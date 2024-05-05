@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 function PreviousAnswersList() {
   const [answers, setAnswers] = useState([]);
   const chatId = useSelector((state) => state.user.chatId);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -21,12 +22,12 @@ function PreviousAnswersList() {
   }, [chatId]);
 
   return (
-    <div className="text-base font-light p-1 bg-white text-black font-sans">
-      <ul>
+    <div className="bg-gray-800 p-4 text-white rounded-lg shadow text-xs">
+      <ul className="divide-y divide-gray-300">
         {answers.map((answer, index) => (
-          <li key={index} className="flex flex-row my-2">
-            <p className="mr-1">Запитання:</p> {answer.questionText}{" "}
-            <p className="ml-3">відповідь:</p> {answer.userAnswer}
+          <li key={index} className="flex justify-between py-2">
+            <span className="font-medium">Запитання: {answer.questionText}</span>
+            <span>відповідь: {answer.userAnswer}</span>
           </li>
         ))}
       </ul>

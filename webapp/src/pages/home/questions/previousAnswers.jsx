@@ -6,43 +6,34 @@ function PreviousAnswers() {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleWindow = () => {
+    if (!isOpen) {
+      document.body.classList.add("body-no-scroll");
+    } else {
+      document.body.classList.remove("body-no-scroll");
+    }
     setIsOpen(!isOpen);
   };
+
   const closeWindow = () => {
-    document.querySelector(".sliding-window").classList.add("slide-out");
+    const slidingWindow = document.querySelector(".sliding-window");
+    if (slidingWindow) {
+      slidingWindow.classList.add("slide-out");
+    }
     setTimeout(() => {
-      document.querySelector(".sliding-window").classList.remove("slide-out");
+      if (slidingWindow) {
+        slidingWindow.classList.remove("slide-out");
+      }
+      document.body.classList.remove("body-no-scroll");
       setIsOpen(false);
     }, 200);
   };
 
+  // Cleanup on component unmount
   useEffect(() => {
-    const handleScroll = (e) => {
-      const slidingWindow = document.querySelector(".sliding-window");
-      if (isOpen && slidingWindow && slidingWindow.contains(e.target)) {
-        return;
-      }
-
-      if (isOpen) {
-        e.preventDefault();
-      }
-    };
-
-    if (isOpen) {
-      document.body.addEventListener("wheel", handleScroll, { passive: false });
-      document.body.addEventListener("touchmove", handleScroll, {
-        passive: false,
-      });
-    } else {
-      document.body.removeEventListener("wheel", handleScroll);
-      document.body.removeEventListener("touchmove", handleScroll);
-    }
-
     return () => {
-      document.body.removeEventListener("wheel", handleScroll);
-      document.body.removeEventListener("touchmove", handleScroll);
+      document.body.classList.remove("body-no-scroll");
     };
-  }, [isOpen]);
+  }, []);
 
   return (
     <div>
@@ -58,12 +49,12 @@ function PreviousAnswers() {
           {/* Background overlay */}
           <div
             className="fixed top-0 left-0 w-screen h-screen bg-black opacity-50 z-40"
-            onClick={toggleWindow}
+            onClick={closeWindow}
           ></div>
           {/* Sliding window */}
           <div
             className={`bg-slate-600 fixed top-0 left-0 h-full z-50 overflow-y-auto sliding-window ${
-              isOpen ? "slide-in" : isOpen === false && "slide-out"
+              isOpen ? "slide-in" : "slide-out"
             }`}
             style={{
               width: "84vw",
@@ -73,7 +64,7 @@ function PreviousAnswers() {
           >
             <div className="flex flex-row my-auto bg-slate-700">
               <button
-                className="absolute top-0 right-0 m-2 mr-5 text-white  "
+                className="absolute top-0 right-0 m-2 mr-5 text-white"
                 onClick={closeWindow}
               >
                 Close

@@ -3,6 +3,8 @@ const router = express.Router();
 const urModel = require("../models/users");
 const fs = require("fs");
 const path = require("path");
+const multer = require("multer");
+const Jimp = require("jimp");
 
 router.use(express.json());
 
@@ -10,7 +12,6 @@ router.put("/edit/:chatId", async (req, res) => {
   const chatId = parseInt(req.params.chatId);
   const { name } = req.body;
 
-  // Validate name
   if (!name || typeof name !== "string") {
     return res
       .status(400)
@@ -20,7 +21,6 @@ router.put("/edit/:chatId", async (req, res) => {
   console.log(chatId);
   console.log(typeof chatId);
   try {
-    // Update user by chatId
     const user = await urModel.findOneAndUpdate(
       { chatId }, // Find user by chatId
       { name }, // Update the name
@@ -38,36 +38,46 @@ router.put("/edit/:chatId", async (req, res) => {
   }
 });
 
-const profilePicsDir = path.join(__dirname, "profilePics");
+const storage = multer.memoryStorage(); // Use memory storage to handle file transformation
+const upload = multer({ storage: storage });
 
-// Create the profilePics directory if it doesn't exist
-if (!fs.existsSync(profilePicsDir)) {
-  fs.mkdirSync(profilePicsDir);
-}
+// Update user profile picture
+router.put(
+  "/editPhoto/:chatId",
+  upload.single("profilePic"),
+  async (req, res) => {
+    const chatId = req.params.chatId;
+    if (!req.file) {
+      return res.status(400).send({ error: "No file uploaded" });
+    }
 
-router.put("/editPhoto/:chatId", async (req, res) => {
-  const chatId = req.params.chatId;
+    try {
+      // Load the image with Jimp
+      const image = await Jimp.read(req.file.buffer);
+      // Resize the image to width of 500 pixels and auto scale the height
+      await image.resize(500, Jimp.AUTO);
+      // Convert the image to JPEG format
+      const buffer = await image.quality(90).getBufferAsync(Jimp.MIME_JPEG);
 
-  // Get the image data from the request body
-  const imageData = req.body.imageData;
+      const filename = `${chatId}.jpeg`; // Save the file as JPEG with chatId as the filename
+      const filePath = path.join(__dirname, "..", "usersPics", filename);
 
-  // Generate a unique filename for the image using the chatId
-  const imageFileName = `img${chatId}.${Date.now()}.jpg`;
-
-  // Define the path where the image will be stored
-  const imagePath = path.join(profilePicsDir, imageFileName);
-
-  try {
-    // Write the image data to the file
-    fs.writeFileSync(imagePath, imageData, "base64");
-
-    // Respond with a success message
-    res.status(200).json({ message: "Profile image uploaded successfully" });
-  } catch (error) {
-    // If an error occurs, respond with an error message
-    console.error("Error uploading profile image:", error);
-    res.status(500).json({ error: "Failed to upload profile image" });
+      // Write the processed image to disk
+      await fs.promises.writeFile(filePath, buffer);
+      const updatedUser = await urModel.findOneAndUpdate(
+        { chatId: parseInt(chatId) },
+        { img: filename },
+        { new: true }
+      );
+      if (!updatedUser) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      res.json({ user: updatedUser });
+    } catch (error) {
+      console.error("Error updating user profile picture:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
   }
-});
+);
 
 module.exports = router;
