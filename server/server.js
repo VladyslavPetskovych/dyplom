@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const dbConfig = require("./db");
 const cors = require("cors");
+const path = require('path');
 app.set("view engine", "ejs");
 
 app.use(cors());
