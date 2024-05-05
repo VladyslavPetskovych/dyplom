@@ -1,61 +1,62 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
+import axios from "axios"; // Import axios for HTTP requests
 import { useSelector } from "react-redux";
-import EditModal from "./editModal";
-
-function Profile() {
-  const [userData, setUserData] = useState({});
-  const [isModalOpen, setIsModalOpen] = useState(false);
+function EditImg({ onUpdateImage }) {
+  const [file, setFile] = useState(null);
   const chatId = useSelector((state) => state.user.chatId);
+  // Handle file selection
+  const handleFileChange = (event) => {
+    setFile(event.target.files[0]); // Update the state with the selected file
+  };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (chatId) {
-        const response = await axios.get(
-          `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/users/getUser/${chatId}`
-        );
-        setUserData(response.data.user);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!file) {
+      alert("Please select a file first!");
+      return;
+    }
+  
+    const formData = new FormData();
+    formData.append("profilePic", file);
+  
+    try {
+      const response = await axios.put(
+        `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/profile/editPhoto/${chatId}`,
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+      if (response.status === 200) {
+        onUpdateImage(`https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/usersPics/${response.data.user.img}`);
+        alert("File uploaded successfully!");
+      } else {
+        alert("Failed to upload file.");
       }
-    };
-    fetchData();
-  }, [chatId]);
-
-  const handleEditClick = () => {
-    setIsModalOpen(true);
+      
+    } catch (error) {
+      console.error("Error uploading file:", error);
+      alert("Error uploading file!");
+    }
   };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  // Determine the image to display
-  const userProfilePic = userData.img ? 
-    `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/usersPics/${userData.img}` : 
-    require('../../assets/default/defUser.jpg');
 
   return (
-    <div className="h-screen bg-neutral-200 text-black p-5 flex justify-center">
-      <div className="flex flex-col items-center">
-        <img className="h-32 w-32 rounded-full" src={userProfilePic} alt="User Profile" />
-        <div className="flex flex-row">
-          <p className="px-1 bg-neutral-300">Псевдо: </p>
-          <p>{userData.name}</p>
-          <p>{chatId}</p>
-        </div>
-        <button className="bg-amber-100" onClick={handleEditClick}>
-          Редагувати
+    <div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="file"
+          className="border border-gray-300 p-2 mt-2 w-full rounded"
+          onChange={handleFileChange}
+        />
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2"
+        >
+          Upload Image
         </button>
-        {isModalOpen && (
-          <EditModal
-            onClose={handleCloseModal}
-            isOpen={isModalOpen}
-            userData={userData}
-            setUserData={setUserData}
-          />
-        )}
-      </div>
+      </form>
     </div>
   );
 }
 
-export default Profile;
+export default EditImg;
