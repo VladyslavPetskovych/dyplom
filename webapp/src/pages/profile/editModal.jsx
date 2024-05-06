@@ -6,9 +6,7 @@ import { useState } from "react";
 function EditModal({ isOpen, onClose, userData, setUserData, onUpdateImage }) {
   const [newName, setNewName] = useState(userData.name);
 
-  const handleUpdateUserImage = (newImageUrl) => {
-    setUserData({ ...userData, img: newImageUrl });
-  };
+
 
   const handleOutsideClick = (e) => {
     if (e.target === e.currentTarget) {

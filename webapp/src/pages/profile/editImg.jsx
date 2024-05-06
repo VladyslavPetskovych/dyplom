@@ -31,8 +31,10 @@ function EditImg({ onUpdateImage }) {
         onUpdateImage(`https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/usersPics/${response.data.user.img}`);
         alert("File uploaded successfully!");
       } else {
+        console.error("Failed to upload file: ", response.data);
         alert("Failed to upload file.");
       }
+      
       
     } catch (error) {
       console.error("Error uploading file:", error);
