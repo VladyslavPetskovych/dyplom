@@ -4,7 +4,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/home";
 import Communities from "./pages/communities/communities";
 import Profile from "./pages/profile/profile";
-import FooterMenu from "./component/footerMenu";
+import FooterMenu from "./components/footerMenu";
+import UserPage from './components/UserPage/UserPage';
+import Chat from './components/chat';
 import { useDispatch } from "react-redux";
 import { setChatId } from "./redux/store";
 function App() {
@@ -20,6 +22,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/communities" element={<Communities />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/user/:userId" element={<UserPage />} />
+        <Route path="/chat/:receiverId" element={<Chat />} />
       </Routes>
       <FooterMenu />
 

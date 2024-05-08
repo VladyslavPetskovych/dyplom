@@ -32,7 +32,7 @@ function Communities() {
     <div className="bg-slate-400 min-h-screen">
       <div className="bg-slate-400 flex-1 overflow-y-auto p-5">
         <div className="flex items-center justify-between p-3">
-          <h1 className="text-2xl font-bold">
+          <h1 className="text-xl font-bold">
             {isCommunities ? "Cпільноти" : "Cпілкування"}
           </h1>
           <button

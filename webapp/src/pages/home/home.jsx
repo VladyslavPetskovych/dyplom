@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import QuestionsCard from "./questions/questionsCard";
 import { useSelector } from "react-redux";
-import Header from "../../component/header";
+import Header from "../../components/header";
 import Statistics from "./statistics/statistics";
 function Home() {
   const chatId = useSelector((state) => state.user.chatId);

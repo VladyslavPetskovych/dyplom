@@ -23,9 +23,21 @@ const userSchema = mongoose.Schema(
       },
     ],
     img: {
-      type: String,  
-      default: 'defUser.jpg'    
+      type: String,
+      default: "defUser.jpg",
     },
+    posts: [
+      {
+        text: {
+          type: String,
+          required: true,
+        },
+        createdAt: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );
