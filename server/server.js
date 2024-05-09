@@ -4,6 +4,7 @@ const socketIo = require("socket.io"); // Include Socket.IO
 const app = express();
 const server = http.createServer(app);
 const Message = require("./models/Message");
+const axios = require('axios'); 
 
 const io = socketIo(server, {
   cors: {
@@ -49,49 +50,27 @@ app.use("/server3/userPosts", userPostsRouter);
 app.use("/server3/messages", messagesRouter);
 
 io.of("/server3").on("connection", (socket) => {
-  console.log(`New client connected: ${socket.id}`);
+  console.log(`Connected client ${socket.id}`);
 
-  socket.on("join", ({ userId }) => {
-    socket.join(`user-${userId}`);
+  // Make sure clients join a room based on their userId
+  socket.on("joinRoom", ({ userId }) => {
     socket.join(`user-${userId}`);
     console.log(`User ${userId} joined room: user-${userId}`);
   });
 
   socket.on("sendMessage", async (data) => {
-    const { senderId, receiverId, message } = data;
+    try {
+      // Use axios to send a POST request to the local messages endpoint
+      const response = await axios.post('http://localhost:3002/server3/messages/messages', data);
+      const newMessage = response.data;
 
-    if (validateMessageData(senderId, receiverId, message)) {
-      try {
-        const newMessage = new Message({
-          senderId,
-          receiverId,
-          message,
-          timestamp: new Date(),
-        });
-        await newMessage.save();
-
-        socket.to(`user-${receiverId}`).emit("message", newMessage); // Assuming 'receiverId' is in a room labeled by their ID
-        socket.emit(
-          "messageConfirmation",
-          `Message received and broadcasted: ${newMessage.message}`
-        );
-        socket
-          .to(`user-${senderId}`)
-          .to(`user-${receiverId}`)
-          .emit("message", newMessage);
-
-        socket.emit(
-          "messageConfirmation",
-          `Message received and broadcasted: ${newMessage.message}`
-        );
-        console.log("Message sent:", newMessage);
-      } catch (error) {
-        console.error("Failed to save message:", error);
-        socket.emit("error", "Message failed to send.");
-      }
-    } else {
-      console.log("Invalid message data received:", data);
-      socket.emit("error", "Invalid message data");
+      // Broadcast the message to the receiver and also confirm to the sender
+      socket.to(`user-${data.receiverId}`).emit("message", newMessage);
+      socket.emit("message", newMessage);
+      console.log("Message sent to receiver and confirmed to sender.");
+    } catch (error) {
+      console.error("Failed to save message via internal API:", error);
+      socket.emit("error", "Message failed to send.");
     }
   });
 
@@ -100,14 +79,9 @@ io.of("/server3").on("connection", (socket) => {
   });
 });
 
+
+
 server.listen(3002, () => {
   console.log("Express server with Socket.IO is running on port 3002");
 });
 
-function validateMessageData(senderId, receiverId, message) {
-  return (
-    typeof senderId === "number" &&
-    typeof receiverId === "number" &&
-    typeof message === "string"
-  );
-}
