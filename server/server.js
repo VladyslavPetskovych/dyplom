@@ -61,7 +61,7 @@ io.of("/server3").on("connection", (socket) => {
   socket.on("sendMessage", async (data) => {
     try {
       // Use axios to send a POST request to the local messages endpoint
-      const response = await axios.post('http://localhost:3002/server3/messages/messages', data);
+      const response = await axios.post('https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/messages/messages', data);
       const newMessage = response.data;
 
       // Broadcast the message to the receiver and also confirm to the sender
