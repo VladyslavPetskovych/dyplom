@@ -2,7 +2,9 @@ const express = require("express");
 const http = require("http"); // Include the HTTP module
 const socketIo = require("socket.io"); // Include Socket.IO
 const app = express();
-const server = http.createServer(app); // Create an HTTP server with Express
+const server = http.createServer(app);
+const Message = require("./models/Message");
+
 const io = socketIo(server, {
   cors: {
     origin: "*", // Allow all origins for development, restrict in production
@@ -46,29 +48,50 @@ app.use("/server3/userQuestions", userQuestionsRouter);
 app.use("/server3/userPosts", userPostsRouter);
 app.use("/server3/messages", messagesRouter);
 
-io.on("connection", (socket) => {
+io.of("/server3").on("connection", (socket) => {
   console.log(`New client connected: ${socket.id}`);
 
-  // Inside socket.on('sendMessage', ...)
-  socket.on("sendMessage", async (data) => {
-    const senderId = parseInt(data.senderId);
-    const receiverId = parseInt(data.receiverId);
+  socket.on("join", ({ userId }) => {
+    socket.join(`user-${userId}`);
+    socket.join(`user-${userId}`);
+    console.log(`User ${userId} joined room: user-${userId}`);
+  });
 
-    if (senderId && receiverId && data.message) {
+  socket.on("sendMessage", async (data) => {
+    const { senderId, receiverId, message } = data;
+
+    if (validateMessageData(senderId, receiverId, message)) {
       try {
         const newMessage = new Message({
-          senderId: senderId,
-          receiverId: receiverId,
-          message: data.message,
+          senderId,
+          receiverId,
+          message,
           timestamp: new Date(),
         });
         await newMessage.save();
-        io.emit("message", newMessage);
+
+        socket.to(`user-${receiverId}`).emit("message", newMessage); // Assuming 'receiverId' is in a room labeled by their ID
+        socket.emit(
+          "messageConfirmation",
+          `Message received and broadcasted: ${newMessage.message}`
+        );
+        socket
+          .to(`user-${senderId}`)
+          .to(`user-${receiverId}`)
+          .emit("message", newMessage);
+
+        socket.emit(
+          "messageConfirmation",
+          `Message received and broadcasted: ${newMessage.message}`
+        );
+        console.log("Message sent:", newMessage);
       } catch (error) {
         console.error("Failed to save message:", error);
+        socket.emit("error", "Message failed to send.");
       }
     } else {
-      console.log("Message data is incomplete or invalid:", data);
+      console.log("Invalid message data received:", data);
+      socket.emit("error", "Invalid message data");
     }
   });
 
@@ -77,7 +100,14 @@ io.on("connection", (socket) => {
   });
 });
 
-// Use the HTTP server to listen, not the Express app directly
 server.listen(3002, () => {
   console.log("Express server with Socket.IO is running on port 3002");
 });
+
+function validateMessageData(senderId, receiverId, message) {
+  return (
+    typeof senderId === "number" &&
+    typeof receiverId === "number" &&
+    typeof message === "string"
+  );
+}
