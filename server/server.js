@@ -49,7 +49,7 @@ app.use("/server3/userQuestions", userQuestionsRouter);
 app.use("/server3/userPosts", userPostsRouter);
 app.use("/server3/messages", messagesRouter);
 
-io.of("/server3").on("connection", (socket) => {
+io.of("/socket").on("connection", (socket) => {
   console.log(`Connected client ${socket.id}`);
 
   // Make sure clients join a room based on their userId

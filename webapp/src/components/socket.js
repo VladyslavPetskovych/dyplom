@@ -1,4 +1,4 @@
 import io from "socket.io-client";
-export const socket = io.connect(
-  "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3"
+export const socket = io(
+  "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/socket"
 );
