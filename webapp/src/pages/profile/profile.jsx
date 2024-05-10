@@ -30,10 +30,10 @@ function Profile() {
   };
 
   const updateUserImage = (filenameOrUrl) => {
-    console.log("Received for update:", filenameOrUrl); // See what is received exactly
+    console.log("Received for update:", filenameOrUrl);
     const filename = filenameOrUrl.split("/").pop();
     const newImageUrl = `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/usersPics/${filename}?${new Date().getTime()}`;
-    console.log("New image URL:", newImageUrl); // Check the constructed URL
+    console.log("New image URL:", newImageUrl);
     setUserProfilePic(newImageUrl);
   };
 
@@ -73,7 +73,15 @@ function Profile() {
         )}
       </div>
       <div className="">
-        <ProfilePosts />
+        <ProfilePosts chatId={chatId} />
+      </div>
+      <div className="flex justify-center  mt-5">
+        {/* Conditional rendering to check if posts are available */}
+        {userData.posts && userData.posts.length > 0 ? (
+          <p className="p-5 w-2/3 border">{userData.posts[0].text}</p>
+        ) : (
+          <p>Loading posts or no posts available...</p>
+        )}
       </div>
     </div>
   );

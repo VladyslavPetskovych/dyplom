@@ -30,8 +30,7 @@ function UsersAbs({ opacity }) {
   const additionalUsersCount = users.length > numberOfUsersShown ? users.length - numberOfUsersShown : 0;
 
   return (
-    <div style={{ opacity: opacity }} className={`absolute ${expanded ? 'top-0 left-0 w-screen h-screen bg-white' : 'bottom-[120px] right-[40px] w-[200px] bg-slate-300'} p-4 transition-all duration-500 ease-in-out`}>
-
+    <div style={{ opacity: opacity }} className={`fixed ${expanded ? 'top-0 left-0 w-screen h-screen bg-white' : 'bottom-[105px] right-[10px] w-[200px] bg-slate-300'} p-2 transition-all duration-500 ease-in-out`}>
       {expanded ? (
         <button onClick={toggleExpand} className="absolute top-4 right-4 text-lg font-bold">Close</button>
       ) : (
@@ -39,16 +38,12 @@ function UsersAbs({ opacity }) {
       )}
       <div className="flex flex-col space-y-2 overflow-auto">
         {users.slice(0, expanded ? users.length : numberOfUsersShown).map(user => (
-         
-
-          // Inside the map function in UsersAbs component
           <Link to={`/user/${user.chatId}`} key={user._id} className="bg-slate-200 rounded px-3 py-1 flex items-center space-x-2">
             <img src={user.img ? `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/usersPics/${user.img}` : defaultUserImage}
                  alt={user.name || 'anon'}
                  className="h-10 w-10 rounded-full" />
             <span>{user.name || 'anon'}</span>
           </Link>
-          
         ))}
         {!expanded && additionalUsersCount > 0 && (
           <div className="text-center text-sm font-medium bg-slate-200" onClick={toggleExpand}>
