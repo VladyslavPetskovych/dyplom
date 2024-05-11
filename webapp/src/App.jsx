@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     tg.ready();
     dispatch(setChatId(tg.initDataUnsafe.user.id));
-    //dispatch(setChatId(938729564));
+    ////dispatch(setChatId(938729564));
   }, []);
   return (
     <BrowserRouter>
