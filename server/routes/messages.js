@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Message = require("../models/Message");
+const axios = require('axios')
 
 // Message retrieval route
 router.get("/messages/:senderId/:receiverId", async (req, res) => {
@@ -19,28 +20,59 @@ router.get("/messages/:senderId/:receiverId", async (req, res) => {
   }
 });
 
-router.post("/messages", async (req, res) => {
-    const { message } = req.body;
-    // Parse senderId and receiverId from request body
-    const senderId = parseInt(req.body.senderId);
-    const receiverId = parseInt(req.body.receiverId);
+async function createChat(participantIds) {
+  const url = "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/chats/newChat"; // Adjust the URL as needed
+  const data = {
+    participantIds: participantIds,
+  };
 
-    console.log("Received message data:", senderId, receiverId, message);
-    console.log("Data types:", typeof senderId, typeof receiverId, typeof message);
+  try {
+    const response = await axios.post(url, data);
+    console.log("Chat created successfully:", response.data);
+  } catch (error) {
+    console.error(
+      "Failed to create chat:",
+      error.response ? error.response.data : error.message
+    );
+  }
+}
+
+router.post("/messages", async (req, res) => {
+  const { message } = req.body;
+  // Parse senderId and receiverId from request body
+  const senderId = parseInt(req.body.senderId);
+  const receiverId = parseInt(req.body.receiverId);
+
+  console.log("Received message data:", senderId, receiverId, message);
+  console.log(
+    "Data types:",
+    typeof senderId,
+    typeof receiverId,
+    typeof message
+  );
+
+  try {
+    const newMessage = new Message({
+      senderId,
+      receiverId,
+      message,
+      timestamp: new Date(), // Assuming your schema has a timestamp
+    });
+    await newMessage.save();
 
     try {
-        const newMessage = new Message({
-            senderId,
-            receiverId,
-            message,
-            timestamp: new Date(), // Assuming your schema has a timestamp
-        });
-        await newMessage.save();
-        res.status(201).json(newMessage);
-    } catch (error) {
-        console.error("Failed to save message:", error);
-        res.status(500).json({ error: error.message });
+      console.log("fdfdfd")
+      await createChat([senderId, receiverId]);
+      res.status(201).json(newMessage); // Successfully saved message and tried to create chat
+    } catch (chatError) {
+      console.error("Failed to create chat:", chatError);
+      res.status(500).json({ error: "Failed to create chat", details: chatError });
     }
+  } catch (error) {
+    console.error("Failed to save message:", error);
+    res.status(500).json({ error: error.message });
+  }
 });
+
 
 module.exports = router;

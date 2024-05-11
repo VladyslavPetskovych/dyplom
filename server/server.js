@@ -39,6 +39,7 @@ const userAnswersRouter = require("./routes/userAnswers");
 const userQuestionsRouter = require("./routes/userQuestions");
 const userPostsRouter = require("./routes/posts");
 const messagesRouter = require("./routes/messages");
+const chatsRouter = require("./routes/chats");
 
 app.use("/server3/users", useRouter);
 app.use("/server3/questions", qRouter);
@@ -48,6 +49,7 @@ app.use("/server3/userAnswers", userAnswersRouter);
 app.use("/server3/userQuestions", userQuestionsRouter);
 app.use("/server3/userPosts", userPostsRouter);
 app.use("/server3/messages", messagesRouter);
+app.use("/server3/chats", chatsRouter);
 
 io.of("/socket").on("connection", (socket) => {
   console.log(`Connected client ${socket.id}`);

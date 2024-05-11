@@ -7,6 +7,8 @@ export default {
         mainC: "#1f2937",
         textW: "#D5D0D0",
         back: "#fff4ed",
+        logo1: "#FFD7C4",
+        logo2: "#FF9A96"
       },
       fontFamily: {
         nunito: ["Nunito Sans", "sans-serif"],

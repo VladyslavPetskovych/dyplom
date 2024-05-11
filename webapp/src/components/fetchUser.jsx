@@ -25,7 +25,7 @@ function FetchUser({ chatId }) {
 
         fetchUserData();
     }, [chatId]); 
-    console.log(userData)
+
     return (
         <div>
             {loading ? (
