@@ -1,6 +1,6 @@
 import React from "react";
 import { FiMessageCircle } from 'react-icons/fi'; // Importing an icon from react-icons
-import ChatList from "./chatList";
+//import ChatList from "./chatList";
 
 function CommunicationsContent() {
   // Mock data - replace this with actual data fetching logic
@@ -13,7 +13,7 @@ function CommunicationsContent() {
   return (
     <div className="p-4 bg-blue-600 h-full overflow-y-auto text-white">
       <p className="text-xl font-bold mb-4">Чати:</p>
-      <ChatList/>
+      
       <ul>
         {users.map(user => (
           <li key={user.id} className="bg-blue-800 hover:bg-blue-700 rounded-lg p-3 shadow mb-2 cursor-pointer transition-colors duration-200 ease-in-out">
