@@ -3,7 +3,7 @@ import axios from "axios"; // Import Axios
 import { socket } from "../components/socket";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import FetchUser from "./fetchUser";
+import ShowUser from "./showUser";
 import { format } from "date-fns";
 
 function Chat() {
@@ -68,9 +68,9 @@ function Chat() {
           <div key={index} className="border bg-slate-700 p-1 m-1 flex justify-between">
             <strong className="mr-2">
               {msg.senderId === senderId ? (
-                <FetchUser chatId={senderId} />
+                <ShowUser chatId={senderId} />
               ) : (
-                <FetchUser chatId={receiverId} />
+                <ShowUser chatId={receiverId} />
               )}
             </strong>
             <span className="break-all">{msg.message}</span>
