@@ -28,8 +28,8 @@ function ChatList() {
 
   return (
     <div>
-      <h1>Chats</h1>
-      <ul>
+     
+      <ul className="flex flex-col">
         {chats.map((chat) => (
           <li key={chat._id}>
             <ChatButton chat={chat} onClick={handleChatButtonClick} currentUserId={chatId} />

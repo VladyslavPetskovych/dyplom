@@ -30,7 +30,7 @@ function UsersAbs({ opacity }) {
   const additionalUsersCount = users.length > numberOfUsersShown ? users.length - numberOfUsersShown : 0;
 
   return (
-    <div style={{ opacity: opacity }} className={`fixed ${expanded ? 'top-0 left-0 w-screen h-screen bg-white' : 'bottom-[105px] right-[10px] w-[200px] bg-slate-300'} p-2 transition-all duration-500 ease-in-out`}>
+    <div style={{ opacity: opacity }} className={`fixed ${expanded ? 'top-0 left-0 w-screen h-screen bg-white' : 'bottom-[105px] right-[10px] w-[170px] bg-slate-300'} p-2 transition-all duration-500 ease-in-out`}>
       {expanded ? (
         <button onClick={toggleExpand} className="absolute top-4 right-4 text-lg font-bold">Close</button>
       ) : (

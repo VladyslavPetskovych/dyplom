@@ -44,7 +44,7 @@ function Communities() {
         </div>
 
         <div className="page-container" style={animationStyle}>
-          {isCommunities ? <CommunitiesContent /> : <CommunicationsContent />}
+          {isCommunities ? <CommunicationsContent /> : <CommunitiesContent /> }
         </div>
       </div>
       <UsersAbs opacity={usersAbsOpacity} />

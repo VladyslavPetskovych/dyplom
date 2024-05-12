@@ -30,11 +30,11 @@ function ChatButton({ chat, currentUserId }) {
   }
 
   return (
-    <div className="flex flex-row justify-center items-center m-2">
+    <div className="flex flex-row justify-center items-center m-1">
       <FiMessageCircle className="text-white mr-2" size={24} />
       <Link 
         to={`/chat/${otherUser.user.chatId}`} // Use otherUser.id that was fetched
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        className="bg-blue-500 flex-grow hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       >
         Chat with {otherUser.user.name} {/* Display the name instead of ID */}
       </Link>

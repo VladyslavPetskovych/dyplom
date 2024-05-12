@@ -47,7 +47,7 @@ function Profile() {
   };
 
   return (
-    <div className="h-full text-black  flex flex-col justify-center">
+    <div className="h-full text-black  bg-white flex flex-col justify-center">
       <div className="flex flex-col items-center  bg-neutral-200 p-5">
         <img
           className="h-32 w-32 rounded-full"
