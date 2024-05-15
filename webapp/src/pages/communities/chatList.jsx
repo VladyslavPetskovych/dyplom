@@ -29,7 +29,7 @@ function ChatList() {
   return (
     <div>
      
-      <ul className="flex flex-col">
+      <ul className="flex flex-col ">
         {chats.map((chat) => (
           <li key={chat._id}>
             <ChatButton chat={chat} onClick={handleChatButtonClick} currentUserId={chatId} />

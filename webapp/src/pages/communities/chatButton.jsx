@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { FiMessageCircle } from "react-icons/fi";
-import { getUserData } from '../../components/fetchUser'; // Ensure the path is correct
+import { getUserData } from '../../components/fetchUser'; 
 import { Link } from "react-router-dom";
 
 function ChatButton({ chat, currentUserId }) {
-  const [otherUser, setOtherUser] = useState(null); // To store other user's data
+  const [otherUser, setOtherUser] = useState(null); 
 
   useEffect(() => {
-    // Determine the other participant's ID
+    
     const otherUserId = chat.participants.find(id => id !== currentUserId);
 
-    // Fetch the other user's data if ID found
+    
     if (otherUserId) {
       getUserData(otherUserId)
         .then(userData => {
@@ -20,23 +20,23 @@ function ChatButton({ chat, currentUserId }) {
         })
         .catch(error => {
           console.error('Error fetching user data:', error);
-          setOtherUser(null); // Reset on error
+          setOtherUser(null); 
         });
     }
-  }, [chat, currentUserId]); // Depend on chat and currentUserId to re-run the effect
+  }, [chat, currentUserId]); 
 
   if (!otherUser) {
-    return <p>Loading...</p>; // Show loading or nothing while data is fetching
+    return <p>Loading...</p>; 
   }
 
   return (
-    <div className="flex flex-row justify-center items-center m-1">
+    <div className="flex flex-row justify-center items-center m-1 ">
       <FiMessageCircle className="text-white mr-2" size={24} />
       <Link 
-        to={`/chat/${otherUser.user.chatId}`} // Use otherUser.id that was fetched
-        className="bg-blue-500 flex-grow hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        to={`/chat/${otherUser.user.chatId}`}
+        className="bg-logo3 flex-grow hover:bg-blue-700 text-white font-base font-josefin py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       >
-        Chat with {otherUser.user.name} {/* Display the name instead of ID */}
+        Chat with {otherUser.user.name} 
       </Link>
     </div>
   );
