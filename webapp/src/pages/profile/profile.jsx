@@ -75,10 +75,10 @@ function Profile() {
       <div className="">
         <ProfilePosts chatId={chatId} />
       </div>
-      <div className="flex justify-center  mt-5">
-        {/* Conditional rendering to check if posts are available */}
+      <div className="flex justify-center mt-5 min-h-96">
+      
         {userData.posts && userData.posts.length > 0 ? (
-          <p className="p-5 w-2/3 border">{userData.posts[0].text}</p>
+          <p className="p-5 w-2/3 border h-full">{userData.posts[0].text}</p>
         ) : (
           <p>Loading posts or no posts available...</p>
         )}

@@ -36,7 +36,7 @@ function ChatButton({ chat, currentUserId }) {
         to={`/chat/${otherUser.user.chatId}`}
         className="bg-logo3 flex-grow hover:bg-blue-700 text-white font-base font-josefin py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       >
-        Chat with {otherUser.user.name} 
+       Чат з  {otherUser.user.name || 'anon'}
       </Link>
     </div>
   );

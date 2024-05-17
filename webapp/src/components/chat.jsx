@@ -39,7 +39,7 @@ function Chat() {
     return () => {
       socket.off("message");
     };
-  }, [senderId, receiverId]); // Re-run when senderId or receiverId changes
+  }, [senderId, receiverId]); 
 
   const sendMessage = () => {
     if (input.trim()) {
@@ -50,9 +50,8 @@ function Chat() {
         timestamp: new Date(),
       };
 
-      // Emit the message to the server
       socket.emit("sendMessage", messageData);
-      setInput(""); // Clear the input field after sending
+      setInput(""); 
     }
   };
   useEffect(() => {

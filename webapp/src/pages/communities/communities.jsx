@@ -8,6 +8,7 @@ function Communities() {
   const [isCommunities, setIsCommunities] = useState(true);
   const [animationStyle, setAnimationStyle] = useState({});
   const [usersAbsOpacity, setUsersAbsOpacity] = useState(1);
+  const [isUsersAllbutExpanded, setIsUsersAllbutExpanded] = useState(false);
 
   const togglePage = () => {
     setUsersAbsOpacity(0);
@@ -28,15 +29,19 @@ function Communities() {
     }, 500);
   };
 
+  const handleUsersAllbutToggle = (expanded) => {
+    setIsUsersAllbutExpanded(expanded);
+  };
+
   return (
-    <div className=" min-h-screen">
+    <div className="min-h-screen">
       <div className="bg-gradient-to-l from-logo1 to-logo2 flex-1 overflow-y-auto p-5">
         <div className="flex items-center justify-between p-3">
           <h1 className="text-xl font-bold">
             {isCommunities ? "Cпільноти" : "Cпілкування"}
           </h1>
           <button
-            className="py-2 px-1 bg-gradient-to-r from-logo3 to-blue-700 text-white font-semibold rounded-lg shadow-md hover:from-logo3 hover:to-logo3 "
+            className="py-2 px-1 bg-gradient-to-r from-logo3 to-blue-700 text-white font-semibold rounded-lg shadow-md hover:from-logo3 hover:to-logo3"
             onClick={togglePage}
           >
             {isCommunities ? "Перейти до спілкування" : "Перейти до Cпільнот"}
@@ -44,10 +49,14 @@ function Communities() {
         </div>
 
         <div className="page-container" style={animationStyle}>
-          {isCommunities ? <CommunicationsContent /> : <CommunitiesContent /> }
+          {isCommunities ? (
+            <CommunicationsContent onUsersAllbutToggle={handleUsersAllbutToggle} />
+          ) : (
+            <CommunitiesContent />
+          )}
         </div>
       </div>
-      <UsersAbs opacity={usersAbsOpacity} />
+      {!isUsersAllbutExpanded && <UsersAbs opacity={usersAbsOpacity} />}
     </div>
   );
 }

@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import defaultUserImage from "../../assets/default/defUser.jpg";
-import UserList from "./userList";
 import { useSelector } from "react-redux";
+import UserList from "./userList";
+
 function UsersAbs({ opacity }) {
   const [users, setUsers] = useState([]);
   const [similarities, setSimilarities] = useState([]);
@@ -18,10 +17,13 @@ function UsersAbs({ opacity }) {
           "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/users/all"
         );
         setUsers(userResponse.data.userss || []);
-        const simResponse = await axios.get(
-          `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/findSimiliarUsers/${chatId}`
-        );
-        setSimilarities(simResponse.data.similarities || []);
+        
+        if (chatId) {
+          const simResponse = await axios.get(
+            `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/findSimiliarUsers/${chatId}`
+          );
+          setSimilarities(simResponse.data.similarities || []);
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
         setUsers([]);
@@ -30,7 +32,7 @@ function UsersAbs({ opacity }) {
     };
 
     fetchUsers();
-  }, []);
+  }, [chatId]);
 
   const toggleExpand = () => setExpanded(!expanded);
 
@@ -66,10 +68,7 @@ function CompactUserView({
     users.length > numberOfUsersShown ? users.length - numberOfUsersShown : 0;
 
   return (
-    <div className="fixed bottom-[105px] right-[10px] w-[170px] bg-black bg-opacity-85 text-white rounded p-2  transition-all duration-500 ease-in-out">
-      <button onClick={toggleExpand} className="text-sm font-bold underline">
-        Усі користувачі
-      </button>
+    <div className="fixed bottom-[105px] right-[10px] w-[150px] bg-black bg-opacity-85 text-white rounded p-2 transition-all duration-500 ease-in-out">
       <UserList
         users={users.slice(0, numberOfUsersShown)}
         similarities={similarities}
@@ -77,7 +76,7 @@ function CompactUserView({
       />
       {additionalUsersCount > 0 && (
         <div
-          className="text-center text-sm font-medium p-1 mt-2 bg-slate-200"
+          className="text-center text-black text-sm font-medium p-1 mt-2 bg-slate-200"
           onClick={toggleExpand}
         >
           +{additionalUsersCount} користувачів...

@@ -53,7 +53,7 @@ function QuestionsCard() {
 
   return (
     <div className="h-[600px] bg-black text-white ">
-      <div className=" flex flex-col items-center justify-start">
+      <div className=" flex flex-col items-center justify-start pt-10 p-1">
         <p>Дай відповіді на питання і бот знайде схожих на тебе людей.</p>
 
         <DropdownMenu />

@@ -29,7 +29,7 @@ function ProfilePosts({ chatId }) {
   };
 
   return (
-    <div className="p-4 max-w-2xl mx-auto  flex">
+    <div className="p-4 max-w-2xl mx-auto   flex">
       <textarea
         className="w-full h-28 p-4 text-lg border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
         placeholder="What’s on your mind? ..."

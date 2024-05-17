@@ -15,14 +15,22 @@ async function fetchData(chatId) {
     }
 }
 
-function cosineSimilarity(vecA, vecB) {
-    if (vecA.length !== vecB.length) throw new Error("Vectors must be of the same length");
+function calculateCustomSimilarity(answer1, answer2) {
+    const difference = Math.abs(answer1 - answer2);
+    const alpha = 5; 
+    return Math.exp(-alpha * difference);
+}
 
-    const dotProduct = vecA.reduce((acc, cur, idx) => acc + cur * vecB[idx], 0);
-    const magnitudeA = Math.sqrt(vecA.reduce((acc, cur) => acc + cur * cur, 0));
-    const magnitudeB = Math.sqrt(vecB.reduce((acc, cur) => acc + cur * cur, 0));
 
-    return (magnitudeA === 0 || magnitudeB === 0) ? 0 : (dotProduct / (magnitudeA * magnitudeB));
+function extractAndAlignAnswers(targetAnswers, userAnswers) {
+    const targetMap = new Map(targetAnswers.map(a => [a.questionId, a.answer]));
+    const userMap = new Map(userAnswers.map(a => [a.questionId, a.answer]));
+
+    const commonQuestions = [...targetMap.keys()].filter(id => userMap.has(id));
+    const targetVector = commonQuestions.map(id => targetMap.get(id));
+    const userVector = commonQuestions.map(id => userMap.get(id));
+
+    return { targetVector, userVector };
 }
 
 router.get("/:chatId", async (req, res) => {
@@ -31,24 +39,15 @@ router.get("/:chatId", async (req, res) => {
     try {
         const { userResponse, allUsersResponse } = await fetchData(chatId);
         const targetAnswers = userResponse.user.answers;
-
         const usersSimilarity = allUsersResponse.userss.map(user => {
-            const commonQuestions = targetAnswers.filter(ta => user.answers.find(ua => ua.questionId === ta.questionId));
-            const targetVector = commonQuestions.map(ta => {
-                const found = user.answers.find(ua => ua.questionId === ta.questionId);
-                return found ? ta.answer : null;
-            }).filter(x => x !== null);
-            const userVector = commonQuestions.map(ta => {
-                const found = user.answers.find(ua => ua.questionId === ta.questionId);
-                return found ? found.answer : null;
-            }).filter(x => x !== null);
-
-            if (targetVector.length === 0 || userVector.length === 0) return { userId: user._id, similarity: 0 };
-
-            const similarity = cosineSimilarity(targetVector, userVector);
+            const { targetVector, userVector } = extractAndAlignAnswers(targetAnswers, user.answers);
+            const similarityScores = targetVector.map((value, index) => 
+                calculateCustomSimilarity(value, userVector[index]));
+            const averageSimilarity = similarityScores.length > 0 ? 
+                similarityScores.reduce((acc, cur) => acc + cur, 0) / similarityScores.length : 0;
             return {
-                userId: user._id,
-                similarity
+                userId: user.name,
+                similarity: averageSimilarity
             };
         });
 

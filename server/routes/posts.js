@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-
 const urModel = require("../models/users");
 
 router.post('/newPost/:chatId', async (req, res) => {
@@ -17,7 +16,7 @@ router.post('/newPost/:chatId', async (req, res) => {
     try {
         const user = await urModel.findOneAndUpdate(
             { chatId: parseInt(chatId, 10) }, 
-            { $set: { posts: [{ text, createdAt: new Date() }] } },
+            { $push: { posts: { text, createdAt: new Date() } } },
             { new: true, upsert: false }
         );
 
@@ -27,7 +26,7 @@ router.post('/newPost/:chatId', async (req, res) => {
         }
 
         console.log("Updated User:", user); 
-        res.status(201).json(user.posts[0]);
+        res.status(201).json(user.posts[user.posts.length - 1]);
     } catch (error) {
         console.error("Error in addPost:", error); 
         res.status(500).send("Error adding post to user.");
