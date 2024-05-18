@@ -3,7 +3,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import EditModal from "./editModal";
 import defaultUserImage from "../../assets/default/defUser.jpg";
-import ProfilePosts from "./profilePosts";
+import EditProfilePosts from "./posts/addProfilePosts";
+import UserPosts from "./posts/profilePosts";
 
 function Profile() {
   const [userData, setUserData] = useState({});
@@ -73,16 +74,9 @@ function Profile() {
         )}
       </div>
       <div className="">
-        <ProfilePosts chatId={chatId} />
+        <EditProfilePosts chatId={chatId} />
       </div>
-      <div className="flex justify-center mt-5 min-h-96">
-      
-        {userData.posts && userData.posts.length > 0 ? (
-          <p className="p-5 w-2/3 border h-full">{userData.posts[0].text}</p>
-        ) : (
-          <p>Loading posts or no posts available...</p>
-        )}
-      </div>
+      <UserPosts userData={userData} />
     </div>
   );
 }

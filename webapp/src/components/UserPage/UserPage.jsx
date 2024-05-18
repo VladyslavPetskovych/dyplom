@@ -48,7 +48,7 @@ function UserPage() {
 
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-4 bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-lg">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
         <h1 className="text-2xl font-bold mb-2">{user.name}</h1>
         <img
           className="w-36 h-36 rounded-full object-cover mb-4"
@@ -63,18 +63,26 @@ function UserPage() {
             e.target.src = defaultUserImage;
           }}
         />
-
-        <p className="text-gray-700 mb-5">
-          {user.posts && user.posts.length > 0 ? user.posts[0].text : ""}
-        </p>
-        <p className="text-gray-600 my-5">More details here...</p>
-        
         <Link
           to={`/chat/${recieverId}`}
           className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Надіслати повідомлення
         </Link>
+        <div className="mt-6 h-96 overflow-y-auto">
+          {user.posts && user.posts.length > 0 ? (
+            user.posts.map((post) => (
+              <div key={post._id} className="mb-4 p-4 bg-gray-200 rounded-lg shadow-md">
+                <p className="text-gray-800">{post.text}</p>
+                <p className="text-gray-500 text-sm">
+                  {new Date(post.createdAt).toLocaleString()}
+                </p>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-700">No posts available.</p>
+          )}
+        </div>
       </div>
     </div>
   );

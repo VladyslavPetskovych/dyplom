@@ -3,15 +3,19 @@ import { Link } from "react-router-dom";
 import defaultUserImage from "../../assets/default/defUser.jpg";
 
 function UserList({ users, similarities, showSimilarities }) {
+  // Create a map for similarities using userId
   const similarityMap = similarities.reduce((map, sim) => {
-    map[sim.userId] = sim.similarity.toFixed(3);
+    if (sim.userId) {
+      map[sim.userId] = sim.similarity.toFixed(3);
+    }
     return map;
   }, {});
 
   return (
     <div className="flex flex-col space-y-2 overflow-auto">
       {users.map((user) => {
-        const userSimilarity = showSimilarities ? similarityMap[user._id] || 'N/A' : '';
+        // Ensure the correct similarity value is displayed
+        const userSimilarity = showSimilarities ? similarityMap[user.name] || 'N/A' : '';
         return (
           <Link
             to={`/user/${user.chatId}`}
