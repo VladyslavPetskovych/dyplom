@@ -1,14 +1,14 @@
 import React from "react";
 import axios from "axios";
 
-function DeletePostModal({ post, onClose, onDelete,chatId }) {
+function DeletePostModal({ post, onClose, onDelete, chatId }) {
   const handleDelete = async () => {
     try {
-        console.log(post)
       await axios.delete(
-        `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/users/deletePost/${chatId}/${post._id}`
+        `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/userPosts/deletePost/${chatId}/${post._id}`
       );
-      onDelete();
+      onDelete(post._id);
+      onClose();
     } catch (error) {
       console.error("Error deleting post:", error);
     }

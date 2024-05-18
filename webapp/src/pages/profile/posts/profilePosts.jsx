@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import EditPostModal from "./editPostModal";
 import DeletePostModal from "./deletePostModal";
 import { useSelector } from "react-redux";
@@ -6,7 +6,15 @@ import { useSelector } from "react-redux";
 function UserPosts({ userData }) {
   const [editingPost, setEditingPost] = useState(null);
   const [deletingPost, setDeletingPost] = useState(null);
+  const [posts, setPosts] = useState([]);
   const chatId = useSelector((state) => state.user.chatId);
+
+  useEffect(() => {
+    if (userData && userData.posts) {
+      setPosts(userData.posts);
+    }
+  }, [userData]);
+
   const formatDate = (dateString) => {
     const options = {
       year: "numeric",
@@ -19,10 +27,8 @@ function UserPosts({ userData }) {
   };
 
   // Sort posts by creation date in descending order
-  const sortedPosts = userData.posts
-    ? [...userData.posts].sort(
-        (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-      )
+  const sortedPosts = posts
+    ? [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     : [];
 
   const handleEditClick = (post) => {
@@ -31,6 +37,18 @@ function UserPosts({ userData }) {
 
   const handleDeleteClick = (post) => {
     setDeletingPost(post);
+  };
+
+  const updatePost = (updatedPost) => {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post._id === updatedPost._id ? updatedPost : post
+      )
+    );
+  };
+
+  const deletePost = (postId) => {
+    setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
   };
 
   return (
@@ -64,22 +82,18 @@ function UserPosts({ userData }) {
         <p>Loading posts or no posts available...</p>
       )}
       {editingPost && (
-        <EditPostModal 
-        chatId={chatId}
+        <EditPostModal
           post={editingPost}
           onClose={() => setEditingPost(null)}
+          onSave={updatePost}
+          chatId={chatId}
         />
       )}
       {deletingPost && (
         <DeletePostModal
           post={deletingPost}
           onClose={() => setDeletingPost(null)}
-          onDelete={() => {
-            // Handle post deletion
-            const newPosts = sortedPosts.filter(post => post._id !== deletingPost._id);
-            userData.posts = newPosts;
-            setDeletingPost(null);
-          }}
+          onDelete={() => deletePost(deletingPost._id)}
           chatId={chatId}
         />
       )}

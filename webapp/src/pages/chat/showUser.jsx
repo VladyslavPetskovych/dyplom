@@ -33,7 +33,8 @@ function FetchUser({ chatId }) {
             ) : error ? (
                 <p>Error: {error}</p>
             ) : userData ? (
-                <div>
+                <div className='flex flex-row my-auto items-center'>
+                    <img className='h-9 w-9 rounded-full' src={`https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/usersPics/${userData.img}`} alt=""  />
                     <p>{userData.name || 'anon'}:</p>
                 </div>
             ) : (

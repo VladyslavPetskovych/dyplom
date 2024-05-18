@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function EditPostModal({ post, onClose,chatId }) {
+function EditPostModal({ post, onClose, onSave, chatId }) {
   const [text, setText] = useState(post.text);
 
   const handleSave = async () => {
     try {
-      await axios.put(
-        `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/users/editPost/${chatId}/${post._id}`,
+      const response = await axios.put(
+        `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/userPosts/editPost/${chatId}/${post._id}`,
         { text }
       );
+      onSave(response.data);
       onClose();
     } catch (error) {
       console.error("Error saving post:", error);

@@ -46,6 +46,10 @@ function UserPage() {
     return <div className="text-center text-red-500">Error: {error}</div>;
   if (!user) return <div className="text-center">No user data available.</div>;
 
+  const sortedPosts = user.posts
+    ? [...user.posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    : [];
+
   return (
     <div className="flex flex-col items-center justify-start min-h-screen p-4 bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
@@ -70,8 +74,8 @@ function UserPage() {
           Надіслати повідомлення
         </Link>
         <div className="mt-6 h-96 overflow-y-auto">
-          {user.posts && user.posts.length > 0 ? (
-            user.posts.map((post) => (
+          {sortedPosts.length > 0 ? (
+            sortedPosts.map((post) => (
               <div key={post._id} className="mb-4 p-4 bg-gray-200 rounded-lg shadow-md">
                 <p className="text-gray-800">{post.text}</p>
                 <p className="text-gray-500 text-sm">
