@@ -1,18 +1,17 @@
 import React from "react";
-import ChatList from "./chatList";
-import UsersAllbut from "./usersAllbut";
+import UsersAbs from "./usersAbs";
 
-function CommunicationsContent({ onUsersAllbutToggle }) {
+function CommunitiesContent() {
   return (
-    <div className="p-4 bg-black bg-opacity-75 rounded-xl h-full overflow-y-auto text-white">
-      <div className="flex flex-row justify-between items-center mb-5">
-        <p className="text-xl font-bold">Чати:</p>
-        <UsersAllbut onToggleExpand={onUsersAllbutToggle} />
+    <div className="p-4 h-full min-h-screen bg-red-400">
+      <div className="h-24 bg-red-300 m-1 p-4 rounded-2xl">
+        <p>Чат на тему музики:</p>
       </div>
-
-      <ChatList />
+      <div className="h-24 bg-red-300 m-1 p-4 rounded-2xl">
+        <p>Чат на тему фільмів:</p>
+      </div>
     </div>
   );
 }
 
-export default CommunicationsContent;
+export default CommunitiesContent;
