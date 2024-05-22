@@ -6,14 +6,15 @@ import Statistics from "./statistics/statistics";
 function Home() {
   const chatId = useSelector((state) => state.user.chatId);
   return (
-    <div className="bg-slate-300 ">
-      <div className=" text-white text-base font-popins font-semibold [text-shadow:_0_1px_0_rgb(0_0_0_/_90%)]">
+    <div className="bg-logo1 ">
+      <div className=" text-white text-base font-popins font-semibold ">
         <Header />
 
         <Statistics chatId={chatId} />
         <QuestionsCard />
     
       </div>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus accusantium labore iusto natus neque ipsa corporis cupiditate molestiae perspiciatis nostrum? Delectus obcaecati nisi accusantium assumenda est rerum voluptatem, reprehenderit laboriosam.</p>
     </div>
   );
 }

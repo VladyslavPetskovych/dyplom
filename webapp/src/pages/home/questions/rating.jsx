@@ -22,7 +22,7 @@ function Rating({ selectedRating, onRatingSelect }) {
             className={`p-1 px-2 ${getColorForValue(value)}`} // Apply color based on value
             style={{
               marginLeft: value === 1 ? 0 : -1,
-              opacity: value === selectedRating ? 1 : 0.4, // Full opacity for selected, half for others
+              opacity: value === selectedRating ? 1 : 0.7, // Full opacity for selected, half for others
             }}
             onClick={() => handleRatingSelect(value)}
           >

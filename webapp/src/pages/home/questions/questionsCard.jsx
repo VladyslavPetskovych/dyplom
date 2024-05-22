@@ -1,15 +1,18 @@
+// src/components/QuestionsCard.js
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
-import DropdownMenu from "./dropdown";
+import DropdownMenu from "./slider/dropdown";
 import Question from "./question";
-import PrevoiusAnswers from "./previousAnswers";
+import PreviousAnswers from "./previousAnswers";
 
 function QuestionsCard() {
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState([]);
   const [unansweredQuestionsList, setUnansweredQuestionsList] = useState([]);
+  const [filteredQuestions, setFilteredQuestions] = useState([]);
   const chatId = useSelector((state) => state.user.chatId);
 
   useEffect(() => {
@@ -27,7 +30,6 @@ function QuestionsCard() {
 
           setUserAnswers(userAnswersResponse.data);
 
-          // Filter unanswered questions before setting state
           const unanswered = questionsResponse.data.filter(
             (question) =>
               !userAnswersResponse.data.some(
@@ -35,9 +37,8 @@ function QuestionsCard() {
               )
           );
           setQuestions(unanswered);
-
-          // Set unanswered questions list
           setUnansweredQuestionsList(unanswered);
+          setFilteredQuestions(unanswered);
         }
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -51,19 +52,34 @@ function QuestionsCard() {
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
   };
 
-  return (
-    <div className="h-[600px] bg-black text-white ">
-      <div className=" flex flex-col items-center justify-start pt-10 p-1">
-        <p>Дай відповіді на питання і бот знайде схожих на тебе людей.</p>
+  const handleCategoryClick = (categoryId) => {
+    const sortedQuestions = [
+      ...unansweredQuestionsList.filter(
+        (question) => question.category_id === categoryId
+      ),
+      ...unansweredQuestionsList.filter(
+        (question) => question.category_id !== categoryId
+      ),
+    ];
+    setFilteredQuestions(sortedQuestions);
+    setCurrentQuestionIndex(0);
+  };
 
-        <DropdownMenu />
-        <div className="flex text-white">
-          <PrevoiusAnswers />
-          <div className="bg-slate-800 border rounded-lg w-full m-1">
-            {unansweredQuestionsList.length > 0 &&
-            currentQuestionIndex < unansweredQuestionsList.length ? (
+  return (
+    <div className="h-full bg-black text-white mb-24">
+      <p className="p-2">
+        Дай відповіді на питання і бот знайде схожих на тебе людей.
+      </p>
+      <PreviousAnswers />
+      <div className="flex flex-col items-center justify-start pt-2 p-1">
+        <DropdownMenu onCategoryClick={handleCategoryClick} />
+
+        <div className="flex text-white w-[90%] mb-10">
+          <div className="bg-logo3 bg-opacity-55 border border-logo1 rounded-lg w-full m-1">
+            {filteredQuestions.length > 0 &&
+            currentQuestionIndex < filteredQuestions.length ? (
               <Question
-                question={unansweredQuestionsList[currentQuestionIndex]}
+                question={filteredQuestions[currentQuestionIndex]}
                 onNext={handleNextQuestion}
               />
             ) : (

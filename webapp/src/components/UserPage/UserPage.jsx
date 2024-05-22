@@ -71,7 +71,7 @@ function UserPage() {
           to={`/chat/${recieverId}`}
           className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
-          Надіслати повідомлення
+          Надіслати повідомлення 💬
         </Link>
         <div className="mt-6 h-96 overflow-y-auto">
           {sortedPosts.length > 0 ? (

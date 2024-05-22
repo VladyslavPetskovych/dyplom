@@ -49,20 +49,24 @@ function Profile() {
 
   return (
     <div className="h-full text-black  bg-white flex flex-col justify-center">
-      <div className="flex flex-col items-center  bg-neutral-200 p-5">
+      <div className="flex flex-col items-center bg-logo1  p-5">
+        <div className="flex flex-row w-full justify-between">
+          <p></p>
+          <button className="text-xl  rounded-full  p-1" onClick={handleEditClick}>
+            ...🖊️
+          </button>
+        </div>
+
         <img
-          className="h-32 w-32 rounded-full"
+          className="h-32 w-32 rounded-full border border-black "
           src={userProfilePic}
           alt="User Profile"
         />
-        <div className="flex flex-row m-1">
-          <p className="px-1 bg-neutral-300">Псевдо: </p>
+        <div className="flex flex-row m-1 mt-4">
+          <p className="px-1 bg-neutral-300 mx-2">Псевдо: </p>
           <p>{userData.name}</p>
         </div>
-        <p>{chatId}</p>
-        <button className="bg-amber-100" onClick={handleEditClick}>
-          Редагувати
-        </button>
+
         {isModalOpen && (
           <EditModal
             isOpen={isModalOpen}

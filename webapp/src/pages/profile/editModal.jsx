@@ -63,7 +63,7 @@ function EditModal({ isOpen, onClose, userData, setUserData, onUpdateImage }) {
 
   return (
     <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ${isOpen ? "" : "hidden"}`} onClick={handleOutsideClick}>
-      <div className="bg-white p-8 rounded-lg w-[88%] h-[93%]">
+      <div className="bg-logo1  bg-opacity-90 p-8 rounded-lg w-[88%] h-[93%]">
         <div className="flex flex-row items-center justify-between text-center">
           <h2 className="text-lg font-semibold">Редагувати профіль</h2>
           <button className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded" onClick={onClose}>

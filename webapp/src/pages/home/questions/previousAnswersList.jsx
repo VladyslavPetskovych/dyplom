@@ -22,7 +22,7 @@ function PreviousAnswersList() {
   }, [chatId]);
 
   return (
-    <div className="bg-gray-800 p-4 text-white rounded-lg shadow text-xs">
+    <div className="bg-logo3 bg-opacity-75 p-4 text-white rounded-lg shadow text-xs">
       <ul className="divide-y divide-gray-300">
         {answers.map((answer, index) => (
           <li key={index} className="flex justify-between py-2">

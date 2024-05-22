@@ -34,7 +34,7 @@ function Question({ question, onNext }) {
     <div className="flex flex-col items-center justify-center  ">
       <div className="flex flex-col justify-between w-full">
         <p className="m-1 p-1 text-left">Питання № {question.questionNumber}</p>
-        <p className="p-3 bg-slate-900 min-w-full">{question.questionText}</p>
+        <p className="p-3 bg-black bg-opacity-55 min-w-full">{question.questionText}</p>
       </div>
       <Rating selectedRating={rating} onRatingSelect={setRating} />
 

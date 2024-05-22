@@ -57,11 +57,11 @@ function UserPosts({ userData }) {
         <div className="p-2 w-[85%] border h-full space-y-4 overflow-y-auto bg-white rounded-lg shadow-md">
           {sortedPosts.map((post) => (
             <div key={post._id} className="bg-neutral-100 p-3 rounded relative">
-              <p className="text-lg font-medium text-gray-800">{post.text}</p>
+              <p className="text-lg font-medium text-gray-800 p-3">{post.text}</p>
               <p className="text-xs text-gray-500 mt-2">
                 {formatDate(post.createdAt)}
               </p>
-              <div className="absolute top-2 right-2 flex space-x-2">
+              <div className="absolute top-2 right-2  flex space-x-2">
                 <button
                   className="text-sm text-blue-500"
                   onClick={() => handleEditClick(post)}

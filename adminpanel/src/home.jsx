@@ -18,18 +18,21 @@ function Home() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(selectedCategoryId.category_id)
+    console.log(selectedCategoryId.category_id);
     try {
-      const response = await axios.post("http://localhost:3000/questions", {
-        questionText: inputValue,
-        category_ids: selectedCategoryId.category_id,
-      });
+      const response = await axios.post(
+        "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/questions",
+        {
+          questionText: inputValue,
+          category_ids: selectedCategoryId.category_id,
+        }
+      );
 
       console.log(response.data);
     } catch (error) {
       console.error("Error:", error);
     }
-    alert("Запитання додано успішно!")
+    alert("Запитання додано успішно!");
   };
 
   return (

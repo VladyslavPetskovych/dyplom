@@ -36,14 +36,15 @@ function PreviousAnswers() {
   }, []);
 
   return (
-    <div>
+    <div className="px-2">
       <button
-        className="bg-sky-500 p-2 text-sm font-bold m-1 rounded"
+        className="bg-logo3 p-2 text-sm font-bold m-1 rounded"
         style={{ textShadow: "1px 1px 2px rgba(0, 0, 0, 0.65)" }}
         onClick={toggleWindow}
       >
         Попередні відповіді
       </button>
+      
       {isOpen && (
         <div>
           {/* Background overlay */}
@@ -53,7 +54,7 @@ function PreviousAnswers() {
           ></div>
           {/* Sliding window */}
           <div
-            className={`bg-slate-600 fixed top-0 left-0 h-full z-50 overflow-y-auto sliding-window ${
+            className={`bg-black bg-opacity-70 fixed top-0 left-0 h-full z-50 overflow-y-auto sliding-window ${
               isOpen ? "slide-in" : "slide-out"
             }`}
             style={{
@@ -62,12 +63,12 @@ function PreviousAnswers() {
               transition: "transform 1s linear",
             }}
           >
-            <div className="flex flex-row my-auto bg-slate-700">
+            <div className="flex flex-row my-auto bg-black">
               <button
                 className="absolute top-0 right-0 m-2 mr-5 text-white"
                 onClick={closeWindow}
               >
-                Close
+                Закрити
               </button>
               <div className="m-2">
                 <p>Ваші Попередні відповіді</p>
