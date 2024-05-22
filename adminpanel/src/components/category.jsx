@@ -8,7 +8,7 @@ function Category() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/category");
+        const response = await axios.get("https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/category");
         setCategoryList(response.data);
 
         response.data.forEach((category) => {
@@ -26,7 +26,7 @@ function Category() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:3000/category", {
+      const response = await axios.post("https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/category", {
         category_name: categoryName,
       });
       console.log(response.data);
@@ -42,11 +42,11 @@ function Category() {
   };
 
   return (
-    <div className="h-[200px] w-auto bg-slate-400 m-5">
+    <div className="h-full w-auto bg-slate-400 m-5">
       <div className="flex flex-col items-center justify-center mt-8">
-        <div className="flex flex-row">
+        <div className="flex flex-row flex-wrap">
           {categoryList.map((category) => (
-            <p className="bg-green-100 m-1 p-1 rounded-full border-2 border-orange-200" key={category._id}>{category.category_name}</p>
+            <p className="bg-green-100 m-3 p-1 rounded-full border-2 border-orange-200" key={category._id}>{category.category_name}</p>
           ))}
         </div>
 

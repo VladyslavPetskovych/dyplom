@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Interests from "./interests";
 
 function Statistics({ chatId }) {
   const [user, setUser] = useState(null);
@@ -30,15 +31,17 @@ function Statistics({ chatId }) {
   return (
     <div>
       <div className="bg-slate-500 h-full py-3 flex flex-col items-center justify-center">
-        <div className="flex flex-row">
+        <div className="flex flex-row bg-slate-900 p-1">
           <img
             className="w-32 h-32 object-cover"
             src={`https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/usersPics/${img}`}
             alt=""
           />
-          <div className="flex flex-col text-xs">
+          <div className="flex flex-col text-xs p-2">
             <div>
-              <p>{"ім'я: "} {name}</p>
+              <p>
+                {"ім'я: "} {name}
+              </p>
             </div>
             <div className="">
               <span className=" ">Загалом ви відповіли на </span>
@@ -46,6 +49,7 @@ function Statistics({ chatId }) {
             </div>
           </div>
         </div>
+        <Interests chatId={chatId} />
       </div>
     </div>
   );

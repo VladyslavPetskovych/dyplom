@@ -12,11 +12,7 @@ function Home() {
 
         <Statistics chatId={chatId} />
         <QuestionsCard />
-        <div className="h-96  p-5">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Nobis eaque
-          numquam rerum praesentium maiores soluta commodi odio consequatur
-          sequi 
-        </div>
+    
       </div>
     </div>
   );

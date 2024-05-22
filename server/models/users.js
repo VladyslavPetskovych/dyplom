@@ -38,6 +38,10 @@ const userSchema = mongoose.Schema(
         },
       },
     ],
+    interests: {
+      type: [String],
+      default: [],
+    },
   },
   { timestamps: true }
 );

@@ -6,7 +6,7 @@ import Home from './home'
 function App() {
 
   return (
-    <div className="bg-black h-screen">
+    <div className="bg-black h-full min-h-screen">
       <p className="bg-red-300 h-10 text-2xl w-full">
         Адмін панелька для телеграм боту дипломної роботи
       </p>
