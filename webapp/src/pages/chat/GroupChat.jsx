@@ -14,7 +14,7 @@ function GroupChat() {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3002/server3/messages/groupMessages/${chatId}/${senderId}`
+          `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/messages/groupMessages/${chatId}/${senderId}`
         );
 
         setMessages(response.data);
@@ -41,7 +41,7 @@ function GroupChat() {
 
       try {
         const response = await axios.post(
-          "http://localhost:3002/server3/messages/groupMessages",
+          "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/messages/groupMessages",
           messageData
         );
         setMessages((prevMessages) => [...prevMessages, response.data]);

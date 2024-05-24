@@ -12,7 +12,7 @@ function CommunitiesContent() {
       console.log(chatId);
       console.log(userId);
       const response = await axios.post(
-        "http://localhost:3002/server3/chats/joinGroupChat",
+        "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/chats/joinGroupChat",
         { chatId: String(chatId), chatName, userId }
       );
       navigate(`/groupChat/${chatId}`);
