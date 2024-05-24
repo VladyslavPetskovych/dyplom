@@ -7,21 +7,24 @@ function ChatButton({ chat, currentUserId }) {
   const [otherUser, setOtherUser] = useState(null); 
 
   useEffect(() => {
-    
-    const otherUserId = chat.participants.find(id => id !== currentUserId);
+    if (chat.participants.length > 2 || chat.chatName) {
+      // For group chat
+      setOtherUser({ user: { name: chat.chatName, chatId: chat._id } });
+    } else {
+      const otherUserId = chat.participants.find(id => id !== currentUserId);
 
-    
-    if (otherUserId) {
-      getUserData(otherUserId)
-        .then(userData => {
-          if (userData) {
-            setOtherUser(userData); // Store user data in state
-          }
-        })
-        .catch(error => {
-          console.error('Error fetching user data:', error);
-          setOtherUser(null); 
-        });
+      if (otherUserId) {
+        getUserData(otherUserId)
+          .then(userData => {
+            if (userData) {
+              setOtherUser(userData); // Store user data in state
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching user data:', error);
+            setOtherUser(null); 
+          });
+      }
     }
   }, [chat, currentUserId]); 
 
@@ -36,7 +39,7 @@ function ChatButton({ chat, currentUserId }) {
         to={`/chat/${otherUser.user.chatId}`}
         className="bg-logo3 flex-grow hover:bg-blue-700 text-white font-base font-josefin py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       >
-       Чат з  {otherUser.user.name || 'anon'}
+        {chat.participants.length > 2 ? otherUser.user.name : `Chat with ${otherUser.user.name || 'anon'}`}
       </Link>
     </div>
   );

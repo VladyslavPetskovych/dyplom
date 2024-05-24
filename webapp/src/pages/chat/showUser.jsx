@@ -27,20 +27,20 @@ function FetchUser({ chatId }) {
     }, [chatId]); 
 
     return (
-        <div>
-            {loading ? (
-                <p>Loading...</p>
-            ) : error ? (
-                <p>Error: {error}</p>
-            ) : userData ? (
-                <div className='flex flex-row my-auto items-center'>
-                    <img className='h-9 w-9 rounded-full' src={`https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/usersPics/${userData.img}`} alt=""  />
-                    <p>{userData.name || 'anon'}:</p>
-                </div>
-            ) : (
-                <p>No user data available.</p>
-            )}
-        </div>
+        <div className="flex items-center">
+        {loading ? (
+            <p>Loading...</p>
+        ) : error ? (
+            <p>Error: {error}</p>
+        ) : userData ? (
+            <div className='flex items-center'>
+                <img className='h-9 w-9 rounded-full mr-2' src={`https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/usersPics/${userData.img}`} alt="" />
+                <span className="leading-tight w-full">{userData.name || 'anon'}:</span>
+            </div>
+        ) : (
+            <p>No user data available.</p>
+        )}
+    </div>
     );
 }
 

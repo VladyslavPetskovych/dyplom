@@ -9,12 +9,15 @@ import UserPage from "./components/UserPage/UserPage";
 import Chat from "./pages/chat/chat.jsx";
 import { useDispatch } from "react-redux";
 import { setChatId } from "./redux/store";
+
+import GroupChat from "./pages/chat/GroupChat.jsx";
+
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     tg.ready();
     dispatch(setChatId(tg.initDataUnsafe.user.id));
-   // dispatch(setChatId(938729564));
+    //dispatch(setChatId(938729564));
   }, []);
   return (
     <BrowserRouter>
@@ -24,6 +27,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/user/:userId" element={<UserPage />} />
         <Route path="/chat/:receiverId" element={<Chat />} />
+        <Route path="/groupChat/:chatId" element={<GroupChat />} />
       </Routes>
       <FooterMenu />
 

@@ -13,15 +13,15 @@ function MessageList({ messages, senderId, receiverId }) {
             key={index}
             className="border bg-slate-700 p-1 m-1 flex justify-between"
           >
-            <div className="flex flex-row items-center">
-              <strong className="mr-2">
+            <div className="flex flex-row ">
+              <strong className="mr-8 ">
                 {msg.senderId === senderId ? (
                   <ShowUser chatId={senderId} />
                 ) : (
                   <ShowUser chatId={receiverId} />
                 )}
               </strong>
-              <span className="break-all">{msg.message}</span>
+              <span className="break-all mt-1">{msg.message}</span>
             </div>
 
             <div className="text-xs text-gray-500">

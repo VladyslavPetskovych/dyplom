@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Message = require("../models/Message");
-const axios = require('axios')
+const Chat = require("../models/chats");
+const axios = require("axios");
 
 // Message retrieval route
 router.get("/messages/:senderId/:receiverId", async (req, res) => {
@@ -21,7 +22,8 @@ router.get("/messages/:senderId/:receiverId", async (req, res) => {
 });
 
 async function createChat(participantIds) {
-  const url = "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/chats/newChat"; // Adjust the URL as needed
+  const url =
+    "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/chats/newChat"; // Adjust the URL as needed
   const data = {
     participantIds: participantIds,
   };
@@ -61,12 +63,14 @@ router.post("/messages", async (req, res) => {
     await newMessage.save();
 
     try {
-      console.log("fdfdfd")
+      console.log("fdfdfd");
       await createChat([senderId, receiverId]);
       res.status(201).json(newMessage); // Successfully saved message and tried to create chat
     } catch (chatError) {
       console.error("Failed to create chat:", chatError);
-      res.status(500).json({ error: "Failed to create chat", details: chatError });
+      res
+        .status(500)
+        .json({ error: "Failed to create chat", details: chatError });
     }
   } catch (error) {
     console.error("Failed to save message:", error);
@@ -74,5 +78,47 @@ router.post("/messages", async (req, res) => {
   }
 });
 
+router.get("/groupMessages/:chatId/:userId", async (req, res) => {
+  const { chatId, userId } = req.params;
+
+  try {
+    const chat = await Chat.findById(chatId);
+
+    if (!chat) {
+      return res.status(404).json({ error: "Chat not found" });
+    }
+
+    if (!chat.participants.includes(userId)) {
+      return res
+        .status(403)
+        .json({ error: "You are not a participant of this chat" });
+    }
+
+    const messages = await Message.find({ chatId }).sort({ timestamp: 1 });
+    res.status(200).json(messages);
+  } catch (error) {
+    console.error("Failed to load messages:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Post a new message to a group chat
+router.post("/groupMessages", async (req, res) => {
+  const { chatId, senderId, message } = req.body;
+
+  const newMessage = new Message({
+    chatId,
+    senderId,
+    message,
+  });
+
+  try {
+    await newMessage.save();
+    res.status(201).json(newMessage);
+  } catch (error) {
+    console.error("Failed to send message:", error);
+    res.status(500).json({ error: error.message });
+  }
+});
 
 module.exports = router;
