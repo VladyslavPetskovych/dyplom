@@ -4,7 +4,7 @@ const socketIo = require("socket.io"); // Include Socket.IO
 const app = express();
 const server = http.createServer(app);
 const Message = require("./models/Message");
-const axios = require('axios'); 
+const axios = require("axios");
 
 const io = socketIo(server, {
   cors: {
@@ -52,24 +52,39 @@ app.use("/server3/userPosts", userPostsRouter);
 app.use("/server3/messages", messagesRouter);
 app.use("/server3/chats", chatsRouter);
 app.use("/server3/findSimiliarUsers", findSimiliarUsersRouter);
-
 io.of("/socket").on("connection", (socket) => {
   console.log(`Connected client ${socket.id}`);
 
-  // Make sure clients join a room based on their userId
-  socket.on("joinRoom", ({ userId }) => {
-    socket.join(`user-${userId}`);
-    console.log(`User ${userId} joined room: user-${userId}`);
+  // Make sure clients join a room based on their userId or chatId
+  socket.on("joinRoom", ({ userId, chatId }) => {
+    if (userId) {
+      socket.join(`user-${userId}`);
+      console.log(`User ${userId} joined room: user-${userId}`);
+    }
+    if (chatId) {
+      socket.join(`chat-${chatId}`);
+      console.log(`User joined room: chat-${chatId}`);
+    }
   });
 
   socket.on("sendMessage", async (data) => {
     try {
-      // Use axios to send a POST request to the local messages endpoint
-      const response = await axios.post('https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/messages/messages', data);
+      const endpoint = data.receiverId
+        ? "messages/messages"
+        : "messages/groupMessages";
+      const response = await axios.post(
+        `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/${endpoint}`,
+        data
+      );
       const newMessage = response.data;
 
-      // Broadcast the message to the receiver and also confirm to the sender
-      socket.to(`user-${data.receiverId}`).emit("message", newMessage);
+      if (data.receiverId) {
+        // Individual chat
+        io.to(`user-${data.receiverId}`).emit("message", newMessage);
+      } else {
+        // Group chat
+        io.to(`chat-${data.chatId}`).emit("message", newMessage);
+      }
       socket.emit("message", newMessage);
       console.log("Message sent to receiver and confirmed to sender.");
     } catch (error) {
@@ -83,9 +98,6 @@ io.of("/socket").on("connection", (socket) => {
   });
 });
 
-
-
 server.listen(3002, () => {
   console.log("Express server with Socket.IO is running on port 3002");
 });
-

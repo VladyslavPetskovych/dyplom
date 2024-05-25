@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { socket } from "./socket";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import GroupMessageList from "./GroupMessageList";
@@ -26,8 +27,16 @@ function GroupChat() {
 
     fetchMessages();
 
+    // Join the chat room with both chatId and senderId
+    socket.emit("joinRoom", { chatId, userId: senderId });
+
+    socket.on("message", (message) => {
+      console.log("Message received:", message);
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
     return () => {
-      // Clean up if needed
+      socket.off("message");
     };
   }, [chatId, senderId]);
 
@@ -45,6 +54,7 @@ function GroupChat() {
           messageData
         );
         setMessages((prevMessages) => [...prevMessages, response.data]);
+        socket.emit("sendMessage", messageData);
         console.log("Sent message:", response.data);
       } catch (error) {
         console.error("Failed to send message:", error);
