@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { socket } from "./socket";
+import { socket } from "./socket"; // Ensure you have a socket instance created
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import GroupMessageList from "./GroupMessageList";
-import MessageInput from "./messageInput";
+import GroupMessageList from "./GroupMessageList"; // Component to list group messages
+import MessageInput from "./messageInput"; // Component for message input
 
 function GroupChat() {
   const { chatId } = useParams();
@@ -17,7 +17,6 @@ function GroupChat() {
         const response = await axios.get(
           `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/messages/groupMessages/${chatId}/${senderId}`
         );
-
         setMessages(response.data);
         console.log("Fetched messages:", response.data);
       } catch (error) {
@@ -27,37 +26,28 @@ function GroupChat() {
 
     fetchMessages();
 
-    // Join the chat room with chatId
-    socket.emit("joinRoom", { chatId });
+    socket.emit("joinGroup", { chatId, userId: senderId });
 
-    socket.on("message", (message) => {
-      console.log("Message received:", message);
+    socket.on("groupMessage", (message) => {
+      console.log("Group message received:", message);
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
     return () => {
-      socket.off("message");
+      socket.off("groupMessage");
     };
   }, [chatId, senderId]);
 
-  const sendMessage = async (input) => {
+  const sendMessage = (input) => {
     if (input.trim()) {
       const messageData = {
-        chatId,
         senderId,
+        chatId,
         message: input,
+        timestamp: new Date(),
       };
 
-      try {
-        const response = await axios.post(
-          "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/messages/groupMessages",
-          messageData
-        );
-        socket.emit("sendMessage", messageData);
-        console.log("Sent message:", response.data);
-      } catch (error) {
-        console.error("Failed to send message:", error);
-      }
+      socket.emit("sendGroupMessage", messageData);
     }
   };
 
@@ -70,4 +60,3 @@ function GroupChat() {
 }
 
 export default GroupChat;
-
