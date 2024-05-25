@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { socket } from "./socket";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import MessageList from "./messageList";
+import GroupMessageList from "./GroupMessageList";
 import MessageInput from "./messageInput";
 
-function Chat() {
-  const { receiverId: receiverIdString } = useParams();
-  const receiverId = parseInt(receiverIdString);
+function GroupChat() {
+  const { chatId } = useParams();
   const senderId = parseInt(useSelector((state) => state.user.chatId));
   const [messages, setMessages] = useState([]);
+  const hasConnected = useRef(false); // useRef to keep track of connection status
 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/messages/messages/${senderId}/${receiverId}`
+          `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/messages/groupMessages/${chatId}/${senderId}`
         );
         setMessages(response.data);
       } catch (error) {
@@ -26,37 +26,41 @@ function Chat() {
 
     fetchMessages();
 
-    socket.emit("joinRoom", { userId: senderId });
+    // Ensure joinGroup is emitted only once
+    if (!hasConnected.current) {
+      socket.emit("joinGroup", { chatId });
+      hasConnected.current = true;
+    }
 
-    socket.on("message", (message) => {
-      console.log("Message received:", message);
+    socket.on("groupMessage", (message) => {
+      console.log("Group message received:", message);
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
     return () => {
-      socket.off("message");
+      socket.off("groupMessage");
     };
-  }, [senderId, receiverId]);
+  }, [chatId, senderId]);
 
   const sendMessage = (input) => {
     if (input.trim()) {
       const messageData = {
+        chatId,
         senderId,
-        receiverId,
-        message: input,
+        message: input, // Ensure the message field is included
         timestamp: new Date(),
       };
 
-      socket.emit("sendMessage", messageData);
+      socket.emit("sendGroupMessage", messageData);
     }
   };
 
   return (
     <div className="bg-slate-600 text-white flex flex-col h-[85vh] relative">
-      <MessageList messages={messages} senderId={senderId} receiverId={receiverId} />
+      <GroupMessageList messages={messages} senderId={senderId} />
       <MessageInput sendMessage={sendMessage} />
     </div>
   );
 }
 
-export default Chat;
+export default GroupChat;

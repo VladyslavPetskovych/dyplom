@@ -62,11 +62,7 @@ io.of("/socket").on("connection", (socket) => {
     console.log(`User ${userId} joined room: user-${userId}`);
   });
 
-  // Allow clients to join a group chat
-  socket.on("joinGroup", ({ chatId }) => {
-    socket.join(`group-${chatId}`);
-    console.log(`User joined group chat: group-${chatId}`);
-  });
+
 
   socket.on("sendMessage", async (data) => {
     try {
@@ -87,17 +83,16 @@ io.of("/socket").on("connection", (socket) => {
     }
   });
 
-  // Handle group messages
+  socket.on("joinGroup", ({ chatId }) => {
+    socket.join(`group-${chatId}`);
+    console.log(`User joined group chat: group-${chatId}`);
+  });
+
   socket.on("sendGroupMessage", async (data) => {
     try {
-      // Use axios to send a POST request to the group messages endpoint
-      const response = await axios.post(
-        "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/messages/groupMessages",
-        data
-      );
+      const response = await axios.post('https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/messages/groupMessages', data);
       const newGroupMessage = response.data;
 
-      // Broadcast the message to the group
       socket.to(`group-${data.chatId}`).emit("groupMessage", newGroupMessage);
       console.log("Group message sent.");
     } catch (error) {
@@ -105,6 +100,7 @@ io.of("/socket").on("connection", (socket) => {
       socket.emit("error", "Group message failed to send.");
     }
   });
+
 
   socket.on("disconnect", () => {
     console.log(`Client disconnected: ${socket.id}`);

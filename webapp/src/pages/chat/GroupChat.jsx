@@ -12,15 +12,12 @@ function GroupChat() {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    console.log("GroupChat component mounted or updated");
-
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
           `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/messages/groupMessages/${chatId}/${senderId}`
         );
         setMessages(response.data);
-        console.log("Fetched messages:", response.data);
       } catch (error) {
         console.error("Failed to load messages:", error);
       }
@@ -41,14 +38,17 @@ function GroupChat() {
     };
   }, [chatId, senderId]);
 
-  const sendMessage = async (text) => {
-    const messageData = {
-      chatId,
-      senderId,
-      text,
-    };
+  const sendMessage = (input) => {
+    if (input.trim()) {
+      const messageData = {
+        chatId,
+        senderId,
+        message: input, // Ensure the message field is included
+        timestamp: new Date(),
+      };
 
-    socket.emit("sendGroupMessage", messageData);
+      socket.emit("sendGroupMessage", messageData);
+    }
   };
 
   return (
