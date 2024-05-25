@@ -36,4 +36,31 @@ router.get("/getUserAnswers/:chatId", async (req, res) => {
     }
 });
 
+router.delete("/deleteUserAnswer/:chatId/:questionId", async (req, res) => {
+    try {
+        const { chatId, questionId } = req.params;
+
+        // Find the user by chatId
+        const user = await urModel.findOne({ chatId });
+
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+
+        // Filter out the answer to be deleted
+        const updatedAnswers = user.answers.filter(
+            (answer) => answer.questionId.toString() !== questionId
+        );
+
+        // Update the user's answers
+        user.answers = updatedAnswers;
+        await user.save();
+
+        res.json({ message: "Answer deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting user answer:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
+
 module.exports = router;

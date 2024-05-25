@@ -58,7 +58,7 @@ function PreviousAnswers() {
               isOpen ? "slide-in" : "slide-out"
             }`}
             style={{
-              width: "84vw",
+              width: "88vw",
               transform: isOpen ? "translateX(0)" : "translateX(-100%)",
               transition: "transform 1s linear",
             }}

@@ -1,5 +1,3 @@
-// src/components/QuestionsCard.js
-
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -15,36 +13,36 @@ function QuestionsCard() {
   const [filteredQuestions, setFilteredQuestions] = useState([]);
   const chatId = useSelector((state) => state.user.chatId);
 
-  useEffect(() => {
-    const fetchQuestionsAndUserAnswers = async () => {
-      try {
-        if (chatId !== null) {
-          const [questionsResponse, userAnswersResponse] = await Promise.all([
-            axios.get(
-              "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/questions"
-            ),
-            axios.get(
-              `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/userAnswers/getUserAnswers/${chatId}`
-            ),
-          ]);
+  const fetchQuestionsAndUserAnswers = async () => {
+    try {
+      if (chatId !== null) {
+        const [questionsResponse, userAnswersResponse] = await Promise.all([
+          axios.get(
+            "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/questions"
+          ),
+          axios.get(
+            `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/userAnswers/getUserAnswers/${chatId}`
+          ),
+        ]);
 
-          setUserAnswers(userAnswersResponse.data);
+        setUserAnswers(userAnswersResponse.data);
 
-          const unanswered = questionsResponse.data.filter(
-            (question) =>
-              !userAnswersResponse.data.some(
-                (answer) => answer.questionId === question.questionNumber
-              )
-          );
-          setQuestions(unanswered);
-          setUnansweredQuestionsList(unanswered);
-          setFilteredQuestions(unanswered);
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
+        const unanswered = questionsResponse.data.filter(
+          (question) =>
+            !userAnswersResponse.data.some(
+              (answer) => answer.questionId === question.questionNumber
+            )
+        );
+        setQuestions(unanswered);
+        setUnansweredQuestionsList(unanswered);
+        setFilteredQuestions(unanswered);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchQuestionsAndUserAnswers();
   }, [chatId]);
 
@@ -52,7 +50,8 @@ function QuestionsCard() {
     setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
   };
 
-  const handleCategoryClick = (categoryId) => {
+  const handleCategoryClick = async (categoryId) => {
+    await fetchQuestionsAndUserAnswers(); // Refresh data to include the latest answers
     const sortedQuestions = [
       ...unansweredQuestionsList.filter(
         (question) => question.category_id === categoryId
@@ -63,6 +62,36 @@ function QuestionsCard() {
     ];
     setFilteredQuestions(sortedQuestions);
     setCurrentQuestionIndex(0);
+  };
+
+  const handleAnswerSubmit = async (questionId, answer) => {
+    try {
+      await axios.post(
+        `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/userAnswers/saveUserAnswer`,
+        {
+          chatId,
+          questionId,
+          answer,
+        }
+      );
+
+      setUserAnswers((prevAnswers) => [
+        ...prevAnswers,
+        { questionId, answer },
+      ]);
+
+      setUnansweredQuestionsList((prevUnanswered) =>
+        prevUnanswered.filter((question) => question.questionNumber !== questionId)
+      );
+
+      setFilteredQuestions((prevFiltered) =>
+        prevFiltered.filter((question) => question.questionNumber !== questionId)
+      );
+
+      handleNextQuestion();
+    } catch (error) {
+      console.error("Error submitting answer:", error);
+    }
   };
 
   return (
@@ -81,6 +110,7 @@ function QuestionsCard() {
               <Question
                 question={filteredQuestions[currentQuestionIndex]}
                 onNext={handleNextQuestion}
+                onSubmitAnswer={handleAnswerSubmit}
               />
             ) : (
               <p className="p-2">
