@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { socket } from "./socket";
 import { useParams } from "react-router-dom";
@@ -10,6 +10,7 @@ function GroupChat() {
   const { chatId } = useParams();
   const senderId = useSelector((state) => state.user.chatId);
   const [messages, setMessages] = useState([]);
+  const hasConnected = useRef(false); // useRef to keep track of connection status
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -25,11 +26,14 @@ function GroupChat() {
 
     fetchMessages();
 
-    // Join the group chat room
-    socket.emit("joinGroup", { chatId });
+    // Ensure joinGroup is emitted only once
+    if (!hasConnected.current) {
+      socket.emit("joinGroup", { chatId });
+      hasConnected.current = true;
+    }
 
-    // Listen for new group messages
     socket.on("groupMessage", (message) => {
+      console.log("Group message received:", message);
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
@@ -43,7 +47,7 @@ function GroupChat() {
       const messageData = {
         chatId,
         senderId,
-        message: input, // Ensure the message field is included
+        message: input,
         timestamp: new Date(),
       };
 
