@@ -10,7 +10,7 @@ router.use(express.json());
 
 router.put("/edit/:chatId", async (req, res) => {
   const chatId = parseInt(req.params.chatId);
-  const { name } = req.body;
+  const { name, age, sex, city } = req.body;
 
   if (!name || typeof name !== "string") {
     return res
@@ -18,12 +18,28 @@ router.put("/edit/:chatId", async (req, res) => {
       .json({ error: "Name is required and must be a string" });
   }
 
-  console.log(chatId);
-  console.log(typeof chatId);
+  if (age && typeof age !== "number") {
+    return res.status(400).json({ error: "Age must be a number" });
+  }
+
+  if (sex && typeof sex !== "string") {
+    return res.status(400).json({ error: "Sex must be a string" });
+  }
+
+  if (city && typeof city !== "string") {
+    return res.status(400).json({ error: "City must be a string" });
+  }
+
   try {
+    const updatedFields = { name, age, sex, city };
+    // Remove undefined fields
+    Object.keys(updatedFields).forEach(
+      (key) => updatedFields[key] === undefined && delete updatedFields[key]
+    );
+
     const user = await urModel.findOneAndUpdate(
       { chatId }, // Find user by chatId
-      { name }, // Update the name
+      updatedFields, // Update the fields
       { new: true } // Return the modified user
     );
 
@@ -33,10 +49,11 @@ router.put("/edit/:chatId", async (req, res) => {
 
     res.json({ user });
   } catch (error) {
-    console.error("Error updating user name:", error);
+    console.error("Error updating user:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
+
 
 const storage = multer.memoryStorage(); // Use memory storage to handle file transformation
 const upload = multer({ storage: storage });

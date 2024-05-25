@@ -9,6 +9,15 @@ const userSchema = mongoose.Schema(
     name: {
       type: String,
     },
+    age: {
+      type: Number,
+    },
+    sex: {
+      type: String,
+    },
+    city: {
+      type: String,
+    },
     answers: [
       {
         _id: false,
