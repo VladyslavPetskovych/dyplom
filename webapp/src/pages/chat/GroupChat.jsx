@@ -10,6 +10,7 @@ function GroupChat() {
   const { chatId } = useParams();
   const senderId = useSelector((state) => state.user.chatId);
   const [messages, setMessages] = useState([]);
+  const hasJoinedGroupRef = useRef(false);
 
   useEffect(() => {
     const fetchMessages = async () => {
@@ -26,15 +27,20 @@ function GroupChat() {
 
     fetchMessages();
 
-    socket.emit("joinGroup", { chatId, userId: senderId });
+    if (!hasJoinedGroupRef.current) {
+      socket.emit("joinGroup", { chatId, userId: senderId });
+      hasJoinedGroupRef.current = true;
+    }
 
-    socket.on("groupMessage", (message) => {
+    const handleGroupMessage = (message) => {
       console.log("Group message received:", message);
       setMessages((prevMessages) => [...prevMessages, message]);
-    });
+    };
+
+    socket.on("groupMessage", handleGroupMessage);
 
     return () => {
-      socket.off("groupMessage");
+      socket.off("groupMessage", handleGroupMessage);
     };
   }, [chatId, senderId]);
 

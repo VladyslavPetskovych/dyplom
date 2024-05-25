@@ -52,7 +52,6 @@ app.use("/server3/userPosts", userPostsRouter);
 app.use("/server3/messages", messagesRouter);
 app.use("/server3/chats", chatsRouter);
 app.use("/server3/findSimiliarUsers", findSimiliarUsersRouter);
-
 io.of("/socket").on("connection", (socket) => {
   console.log(`Connected client ${socket.id}`);
 

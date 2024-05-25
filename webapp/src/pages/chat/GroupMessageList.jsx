@@ -8,9 +8,9 @@ function GroupMessageList({ messages, senderId }) {
       {messages
         .slice()
         .reverse()
-        .map((msg) => (
+        .map((msg, index) => (
           <div
-            key={msg.id} // Assuming messages have a unique id
+            key={msg._id || index} // Ensure msg.id is unique or fallback to index
             className={`border p-2 m-1 flex flex-col ${
               msg.senderId === senderId ? "bg-slate-500" : "bg-slate-700"
             }`}
