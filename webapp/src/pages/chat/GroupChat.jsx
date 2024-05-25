@@ -1,18 +1,19 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { socket } from "./socket"; // Ensure you have a socket instance created
+import { socket } from "./socket";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import GroupMessageList from "./GroupMessageList"; // Component to list group messages
-import MessageInput from "./messageInput"; // Component for message input
+import GroupMessageList from "./GroupMessageList";
+import MessageInput from "./messageInput";
 
 function GroupChat() {
   const { chatId } = useParams();
   const senderId = useSelector((state) => state.user.chatId);
   const [messages, setMessages] = useState([]);
-  const hasJoinedGroupRef = useRef(false);
 
   useEffect(() => {
+    console.log("GroupChat component mounted or updated");
+
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
@@ -27,38 +28,27 @@ function GroupChat() {
 
     fetchMessages();
 
-    if (!hasJoinedGroupRef.current) {
-      console.log(`Joining group ${chatId} for user ${senderId}`);
-      socket.emit("joinGroup", { chatId, userId: senderId });
-      hasJoinedGroupRef.current = true;
-    }
+    // Join the group chat room
+    socket.emit("joinGroup", { chatId });
 
-    const handleGroupMessage = (message) => {
-      console.log("Group message received:", message);
+    // Listen for new group messages
+    socket.on("groupMessage", (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
-    };
-
-    socket.on("groupMessage", handleGroupMessage);
+    });
 
     return () => {
-      console.log(`Leaving group ${chatId} for user ${senderId}`);
-      socket.off("groupMessage", handleGroupMessage);
-      socket.emit("leaveGroup", { chatId, userId: senderId });
+      socket.off("groupMessage");
     };
   }, [chatId, senderId]);
 
-  const sendMessage = (input) => {
-    if (input.trim()) {
-      const messageData = {
-        senderId,
-        chatId,
-        message: input,
-        timestamp: new Date(),
-      };
+  const sendMessage = async (text) => {
+    const messageData = {
+      chatId,
+      senderId,
+      text,
+    };
 
-      console.log("Sending group message:", messageData);
-      socket.emit("sendGroupMessage", messageData);
-    }
+    socket.emit("sendGroupMessage", messageData);
   };
 
   return (

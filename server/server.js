@@ -56,20 +56,28 @@ app.use("/server3/findSimiliarUsers", findSimiliarUsersRouter);
 io.of("/socket").on("connection", (socket) => {
   console.log(`Connected client ${socket.id}`);
 
-  // Handling one-to-one chat
+  // Make sure clients join a room based on their userId
   socket.on("joinRoom", ({ userId }) => {
     socket.join(`user-${userId}`);
     console.log(`User ${userId} joined room: user-${userId}`);
   });
 
+  // Allow clients to join a group chat
+  socket.on("joinGroup", ({ chatId }) => {
+    socket.join(`group-${chatId}`);
+    console.log(`User joined group chat: group-${chatId}`);
+  });
+
   socket.on("sendMessage", async (data) => {
     try {
+      // Use axios to send a POST request to the local messages endpoint
       const response = await axios.post(
         "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/messages/messages",
         data
       );
       const newMessage = response.data;
 
+      // Broadcast the message to the receiver and also confirm to the sender
       socket.to(`user-${data.receiverId}`).emit("message", newMessage);
       socket.emit("message", newMessage);
       console.log("Message sent to receiver and confirmed to sender.");
@@ -79,27 +87,19 @@ io.of("/socket").on("connection", (socket) => {
     }
   });
 
-  // Handling group chat
-  socket.on("joinGroup", ({ chatId, userId }) => {
-    socket.join(`group-${chatId}`);
-    console.log(`User ${userId} joined group: group-${chatId}`);
-  });
-
-  socket.on("leaveGroup", ({ chatId, userId }) => {
-    socket.leave(`group-${chatId}`);
-    console.log(`User ${userId} left group: group-${chatId}`);
-  });
-
+  // Handle group messages
   socket.on("sendGroupMessage", async (data) => {
     try {
+      // Use axios to send a POST request to the group messages endpoint
       const response = await axios.post(
         "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/messages/groupMessages",
         data
       );
-      const newMessage = response.data;
+      const newGroupMessage = response.data;
 
-      io.to(`group-${data.chatId}`).emit("groupMessage", newMessage);
-      console.log("Group message sent:", newMessage);
+      // Broadcast the message to the group
+      socket.to(`group-${data.chatId}`).emit("groupMessage", newGroupMessage);
+      console.log("Group message sent.");
     } catch (error) {
       console.error("Failed to save group message via internal API:", error);
       socket.emit("error", "Group message failed to send.");
