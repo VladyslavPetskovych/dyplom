@@ -53,14 +53,10 @@ app.use("/server3/messages", messagesRouter);
 app.use("/server3/chats", chatsRouter);
 app.use("/server3/findSimiliarUsers", findSimiliarUsersRouter);
 
-io.of("/socket").on("connection", (socket) => {
+io.on("connection", (socket) => {
   console.log(`Connected client ${socket.id}`);
 
-  socket.on("joinRoom", ({ userId, chatId }) => {
-    if (userId) {
-      socket.join(`user-${userId}`);
-      console.log(`User ${userId} joined room: user-${userId}`);
-    }
+  socket.on("joinRoom", ({ chatId }) => {
     if (chatId) {
       socket.join(`chat-${chatId}`);
       console.log(`User joined room: chat-${chatId}`);
@@ -69,23 +65,17 @@ io.of("/socket").on("connection", (socket) => {
 
   socket.on("sendMessage", async (data) => {
     try {
-      const endpoint = data.receiverId
-        ? "messages/messages"
-        : "messages/groupMessages";
+      const endpoint = "messages/groupMessages";
       const response = await axios.post(
         `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/${endpoint}`,
         data
       );
       const newMessage = response.data;
 
-      if (data.receiverId) {
-        // Individual chat
-        io.to(`user-${data.receiverId}`).emit("message", newMessage);
-      } else {
-        // Group chat
-        io.to(`chat-${data.chatId}`).emit("message", newMessage);
-      }
-      console.log("Message sent to receiver and confirmed to sender.");
+      // Group chat
+      io.to(`chat-${data.chatId}`).emit("message", newMessage);
+
+      console.log("Message sent to group and confirmed to sender.");
     } catch (error) {
       console.error("Failed to save message via internal API:", error);
       socket.emit("error", "Message failed to send.");
