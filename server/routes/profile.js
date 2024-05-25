@@ -7,7 +7,6 @@ const multer = require("multer");
 const Jimp = require("jimp");
 
 router.use(express.json());
-
 router.put("/edit/:chatId", async (req, res) => {
   const chatId = parseInt(req.params.chatId);
   const { name, age, sex, city } = req.body;
@@ -53,7 +52,6 @@ router.put("/edit/:chatId", async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 });
-
 
 const storage = multer.memoryStorage(); // Use memory storage to handle file transformation
 const upload = multer({ storage: storage });
