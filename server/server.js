@@ -52,6 +52,7 @@ app.use("/server3/userPosts", userPostsRouter);
 app.use("/server3/messages", messagesRouter);
 app.use("/server3/chats", chatsRouter);
 app.use("/server3/findSimiliarUsers", findSimiliarUsersRouter);
+
 io.of("/socket").on("connection", (socket) => {
   console.log(`Connected client ${socket.id}`);
 
@@ -84,6 +85,11 @@ io.of("/socket").on("connection", (socket) => {
     console.log(`User ${userId} joined group: group-${chatId}`);
   });
 
+  socket.on("leaveGroup", ({ chatId, userId }) => {
+    socket.leave(`group-${chatId}`);
+    console.log(`User ${userId} left group: group-${chatId}`);
+  });
+
   socket.on("sendGroupMessage", async (data) => {
     try {
       const response = await axios.post(
@@ -93,7 +99,7 @@ io.of("/socket").on("connection", (socket) => {
       const newMessage = response.data;
 
       io.to(`group-${data.chatId}`).emit("groupMessage", newMessage);
-      console.log("Group message sent.");
+      console.log("Group message sent:", newMessage);
     } catch (error) {
       console.error("Failed to save group message via internal API:", error);
       socket.emit("error", "Group message failed to send.");

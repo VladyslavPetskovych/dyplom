@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { socket } from "./socket"; // Ensure you have a socket instance created
 import { useParams } from "react-router-dom";
@@ -28,6 +28,7 @@ function GroupChat() {
     fetchMessages();
 
     if (!hasJoinedGroupRef.current) {
+      console.log(`Joining group ${chatId} for user ${senderId}`);
       socket.emit("joinGroup", { chatId, userId: senderId });
       hasJoinedGroupRef.current = true;
     }
@@ -40,7 +41,9 @@ function GroupChat() {
     socket.on("groupMessage", handleGroupMessage);
 
     return () => {
+      console.log(`Leaving group ${chatId} for user ${senderId}`);
       socket.off("groupMessage", handleGroupMessage);
+      socket.emit("leaveGroup", { chatId, userId: senderId });
     };
   }, [chatId, senderId]);
 
@@ -53,6 +56,7 @@ function GroupChat() {
         timestamp: new Date(),
       };
 
+      console.log("Sending group message:", messageData);
       socket.emit("sendGroupMessage", messageData);
     }
   };
