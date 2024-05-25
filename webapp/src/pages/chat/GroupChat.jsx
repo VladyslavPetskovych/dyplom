@@ -27,8 +27,8 @@ function GroupChat() {
 
     fetchMessages();
 
-    // Join the chat room with both chatId and senderId
-    socket.emit("joinRoom", { chatId, userId: senderId });
+    // Join the chat room with chatId
+    socket.emit("joinRoom", { chatId });
 
     socket.on("message", (message) => {
       console.log("Message received:", message);
@@ -53,7 +53,6 @@ function GroupChat() {
           "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/messages/groupMessages",
           messageData
         );
-        setMessages((prevMessages) => [...prevMessages, response.data]);
         socket.emit("sendMessage", messageData);
         console.log("Sent message:", response.data);
       } catch (error) {

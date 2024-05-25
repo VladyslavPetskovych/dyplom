@@ -52,10 +52,10 @@ app.use("/server3/userPosts", userPostsRouter);
 app.use("/server3/messages", messagesRouter);
 app.use("/server3/chats", chatsRouter);
 app.use("/server3/findSimiliarUsers", findSimiliarUsersRouter);
+
 io.of("/socket").on("connection", (socket) => {
   console.log(`Connected client ${socket.id}`);
 
-  // Make sure clients join a room based on their userId or chatId
   socket.on("joinRoom", ({ userId, chatId }) => {
     if (userId) {
       socket.join(`user-${userId}`);
@@ -85,7 +85,6 @@ io.of("/socket").on("connection", (socket) => {
         // Group chat
         io.to(`chat-${data.chatId}`).emit("message", newMessage);
       }
-      socket.emit("message", newMessage);
       console.log("Message sent to receiver and confirmed to sender.");
     } catch (error) {
       console.error("Failed to save message via internal API:", error);
