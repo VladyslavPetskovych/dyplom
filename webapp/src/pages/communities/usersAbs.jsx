@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import UserList from "./userList";
+import ExpandedUserView from "./expandedView";
 
 function UsersAbs({ opacity }) {
   const [users, setUsers] = useState([]);
@@ -17,7 +18,7 @@ function UsersAbs({ opacity }) {
           "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/users/all"
         );
         setUsers(userResponse.data.userss || []);
-        
+
         if (chatId) {
           const simResponse = await axios.get(
             `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/findSimiliarUsers/${chatId}`
@@ -34,7 +35,14 @@ function UsersAbs({ opacity }) {
     fetchUsers();
   }, [chatId]);
 
-  const toggleExpand = () => setExpanded(!expanded);
+  const toggleExpand = () => {
+    setExpanded(!expanded);
+    if (!expanded) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  };
 
   return (
     <div style={{ opacity }}>
@@ -82,31 +90,6 @@ function CompactUserView({
           +{additionalUsersCount} користувачів...
         </div>
       )}
-    </div>
-  );
-}
-
-function ExpandedUserView({
-  users,
-  similarities,
-  toggleExpand,
-  showSimilarities,
-}) {
-  return (
-    <div className="fixed top-0 left-0 w-screen h-screen bg-white p-2 transition-all duration-500 ease-in-out">
-      <button
-        onClick={toggleExpand}
-        className="absolute top-4 right-4 text-lg font-bold"
-      >
-        Вийти
-      </button>
-      <div className="pt-12">
-        <UserList
-          users={users}
-          similarities={similarities}
-          showSimilarities={showSimilarities}
-        />
-      </div>
     </div>
   );
 }

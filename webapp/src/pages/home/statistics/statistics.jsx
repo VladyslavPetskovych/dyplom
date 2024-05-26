@@ -25,12 +25,18 @@ function Statistics({ chatId }) {
     return <div>Loading...</div>;
   }
 
-  const { name, img, answers, posts } = user;
-  
+  const { name, img, answers, posts, age, sex, city } = user;
+
+  // Debugging: Check the fetched value of sex
+  console.log(`Fetched sex value: '${sex}'`);
+
+  const normalizedSex = sex?.trim().toLowerCase();
+  const displaySex =
+    normalizedSex === "female" ? "жін" : normalizedSex === "male" ? "чол" : sex;
 
   return (
-    <div className="">
-      <div className="bg-logo1 h-full shadow-none py-3 flex flex-col items-center justify-center">
+    <div>
+      <div className="bg-gradient-to-r from-logo1 to-logo2 h-full shadow-none py-3 flex flex-col items-center justify-center">
         <div className="flex flex-row bg-black w-[96%] p-2 m-2">
           <img
             className="w-32 h-32 object-cover mr-2"
@@ -43,12 +49,16 @@ function Statistics({ chatId }) {
               <p className="pb-1">
                 {"Ім'я: "} {name}
               </p>
-              <p className="pb-1">Вік: 18</p>
-              <p className="pb-1">Звідки: Львів</p>
-              <p className="pb-1">Стать: Чол</p>
+              <p className="pb-1">
+                {"Вік: "} {age}
+              </p>
+              <p className="pb-1">
+                {"Звідки: "} {city}
+              </p>
+              <p className="pb-1">
+                {"Стать: "} {displaySex}
+              </p>
             </div>
-
-          
           </div>
         </div>
         <Interests chatId={chatId} />

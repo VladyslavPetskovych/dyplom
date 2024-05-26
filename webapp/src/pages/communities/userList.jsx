@@ -22,7 +22,7 @@ function UserList({ users, similarities, showSimilarities }) {
             key={user._id}
             className="bg-slate-200 rounded px-3 py-1 flex items-center justify-between space-x-2 w-full"
           >
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 overflow-hidden">
               <img
                 src={user.img ? `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/usersPics/${user.img}` : defaultUserImage}
                 alt={user.name || "anon"}

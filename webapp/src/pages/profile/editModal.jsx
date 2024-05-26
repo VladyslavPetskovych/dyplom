@@ -22,19 +22,25 @@ function EditModal({ isOpen, onClose, userData, setUserData, onUpdateImage }) {
     console.log(userData.chatId); // Debug chatId
     const chatId = userData.chatId;
 
+    // Log the data to be sent
+    const updatedData = {
+      name: newName,
+      age: newAge !== "" ? parseInt(newAge) : undefined,
+      sex: newSex,
+      city: newCity,
+    };
+    console.log("Updated Data:", updatedData);
+
     // Update user profile data
     try {
       const profileResponse = await axios.put(
         `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/profile/edit/${chatId}`,
-        { name: newName, age: newAge, sex: newSex, city: newCity }
+        updatedData
       );
       if (profileResponse.status === 200) {
         setUserData({
           ...userData,
-          name: newName,
-          age: newAge,
-          sex: newSex,
-          city: newCity,
+          ...updatedData,
         });
         alert("Profile updated successfully!");
       } else {

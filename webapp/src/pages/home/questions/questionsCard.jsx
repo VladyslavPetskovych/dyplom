@@ -96,7 +96,7 @@ function QuestionsCard() {
 
   return (
     <div className="h-full bg-black text-white mb-24">
-      <p className="p-2">
+      <p className="p-2 text-center">
         Дай відповіді на питання і бот знайде схожих на тебе людей.
       </p>
       <PreviousAnswers />
