@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ListCategory from "./components/listCategory";
 import axios from "axios";
+import Modal from "./components/homeModal";
 
 function Home() {
   const [inputValue, setInputValue] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -29,16 +32,29 @@ function Home() {
       );
 
       console.log(response.data);
+      setSuccessMessage("Запитання додано успішно!");
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 2000); // Clear the message after 2 seconds
     } catch (error) {
       console.error("Error:", error);
     }
-    alert("Запитання додано успішно!");
+
+    setInputValue(""); // Reset the input field
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
-    <div className="flex items-center justify-center mt-10 bg-slate-500 p-5 m-5">
+    <div className="flex items-center justify-center mt-10 bg-logo2 p-5 m-5">
       <form
-        className="flex flex-col items-center justify-center "
+        className="flex flex-col items-center justify-center"
         onSubmit={handleSubmit}
       >
         <div>
@@ -49,7 +65,7 @@ function Home() {
           />
         </div>
         <div className="p-4 m-1">
-          <label className="m-4  text-2xl">
+          <label className="m-4 text-2xl">
             Введіть питання, яке потрібно додати в БД
           </label>
           <input
@@ -60,15 +76,29 @@ function Home() {
             className="rounded-md p-2"
           />
         </div>
-        <div>
+        <div className="flex flex-row">
+        <button
+            type="button"
+            onClick={openModal}
+            className="bg-green-500 text-white px-4 py-2 rounded-md ml-2 flex items-center justify-center"
+          >
+            Список запитань
+          </button>
           <button
             type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2 flex items-center justify-center "
+            className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2 flex items-center justify-center"
           >
             Додати запитання в БД
           </button>
+       
         </div>
+        {successMessage && (
+          <div className="mt-2 text-logo3">{successMessage}</div>
+        )}
       </form>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <div className="text-lg">Список запитань</div>
+      </Modal>
     </div>
   );
 }

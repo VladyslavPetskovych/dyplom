@@ -42,11 +42,11 @@ function Category() {
   };
 
   return (
-    <div className="h-full w-auto bg-slate-400 m-5">
+    <div className="h-full w-auto bg-logo2 m-5">
       <div className="flex flex-col items-center justify-center mt-8">
         <div className="flex flex-row flex-wrap">
           {categoryList.map((category) => (
-            <p className="bg-green-100 m-3 p-1 rounded-full border-2 border-orange-200" key={category._id}>{category.category_name}</p>
+            <p className="bg-logo1 m-1 p-1 rounded-full border-2 border-orange-200" key={category._id}>{category.category_name}</p>
           ))}
         </div>
 

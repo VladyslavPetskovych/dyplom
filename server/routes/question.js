@@ -44,8 +44,8 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const questionId = req.params.id;
-console.log(questionId);
-console.log(typeof questionId)
+    console.log(questionId);
+    console.log(typeof questionId);
     const question = await Question.findById(questionId);
 
     if (!question) {
@@ -58,5 +58,22 @@ console.log(typeof questionId)
     res.status(500).json({ error: "Error getting question from the database" });
   }
 });
+
+router.delete("/:id", async (req, res) => {
+  try {
+    const questionId = req.params.id;
+    const question = await Question.findByIdAndDelete(questionId);
+
+    if (!question) {
+      return res.status(404).json({ error: "Question not found" });
+    }
+
+    res.status(200).json({ message: "Question deleted successfully" });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Error deleting question from the database" });
+  }
+});
+
 
 module.exports = router;

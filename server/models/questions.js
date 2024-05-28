@@ -9,7 +9,7 @@ const questionSchema = mongoose.Schema(
     questionText: {
       type: String,
       required: true,
-      unique: true, // Забезпечує, що питання не повторюються
+      unique: true, 
     },
     category_id: {
       type: Number,
