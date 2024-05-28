@@ -14,7 +14,8 @@ function Home() {
         <QuestionsCard />
     
       </div>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus accusantium labore iusto natus neque ipsa corporis cupiditate molestiae perspiciatis nostrum? Delectus obcaecati nisi accusantium assumenda est rerum voluptatem, reprehenderit laboriosam.</p>
+
+      
     </div>
   );
 }

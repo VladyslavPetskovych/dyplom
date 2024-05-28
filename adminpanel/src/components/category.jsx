@@ -68,7 +68,7 @@ function Category() {
           <div>
             <button
               type="submit"
-              className="bg-blue-500 text-white px-4 py-2 rounded-md ml-2 flex items-center justify-center mt-10"
+              className="bg-logo3 text-white px-4 py-2  rounded-md ml-2 flex items-center justify-center my-7"
             >
               Додати категорію
             </button>

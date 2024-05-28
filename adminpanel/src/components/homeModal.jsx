@@ -35,8 +35,9 @@ const Modal = ({ isOpen, onClose, children }) => {
       await axios.delete(
         `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/questions/${questionId}`
       );
-      setAnswers((prevAnswers) =>
-        prevAnswers.filter((answer) => answer.questionId !== questionId)
+      // Update the questions state after deleting a question
+      setQuestions((prevQuestions) =>
+        prevQuestions.filter((question) => question._id !== questionId)
       );
     } catch (error) {
       console.error("Error deleting answer:", error);
@@ -64,7 +65,6 @@ const Modal = ({ isOpen, onClose, children }) => {
                 <p className="mx-1 bg-logo2 m-0.5">{question.questionNumber}</p>
                 <p className="m-0.5">{question.questionText}</p>
               </div>
-
               <button
                 className="text-xs bg-red-600 p-1.5 h-7 w-7 rounded-full"
                 onClick={() => handleDeleteAnswer(question._id)}
