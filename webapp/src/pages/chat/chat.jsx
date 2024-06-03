@@ -52,7 +52,7 @@ function Chat() {
   };
 
   return (
-    <div className="bg-slate-600 text-white flex flex-col h-[85vh] relative">
+    <div className="bg-logo1 text-white flex flex-col h-[85vh] relative">
       <MessageList messages={messages} senderId={senderId} receiverId={receiverId} />
       <MessageInput sendMessage={sendMessage} />
     </div>

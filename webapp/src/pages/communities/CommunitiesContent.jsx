@@ -25,28 +25,31 @@ function CommunitiesContent() {
   return (
     <div className="p-4 h-full min-h-screen bg-red-400">
       <div
-        className="h-24 bg-red-300 m-1 p-4 rounded-2xl cursor-pointer"
+        className="h-24 bg-red-300 m-1 p-4 rounded-2xl cursor-pointer bg-cover bg-center"
+        style={{ backgroundImage: "url('../src/assets/goupchats/1_nChshyHhYer985FIUWu6TA.jpg')" }}
         onClick={() =>
           joinGroupChat("60f5a3b4c4567890abcd1234", "Чат на тему музики")
         }
       >
-        <p>Чат на тему музики:</p>
+        <p className="bg-black text-white w-24 p-1">Чат на тему музики:</p>
       </div>
       <div
-        className="h-24 bg-red-300 m-1 p-4 rounded-2xl cursor-pointer"
+        className="h-24 bg-red-300 m-1 p-4 rounded-2xl cursor-pointer bg-cover bg-center"
+        style={{ backgroundImage: "url('../src/assets/goupchats/images.jpg')" }}
         onClick={() =>
           joinGroupChat("60f5a3b4c4567890abcd5678", "Чат на тему фільмів")
         }
       >
-        <p>Чат на тему фільмів:</p>
+        <p className="bg-black text-white w-24 p-1">Чат на тему фільмів:</p>
       </div>
       <div
-        className="h-24 bg-red-300 m-1 p-4 rounded-2xl cursor-pointer"
+        className="h-24 bg-red-300 m-1 p-4 rounded-2xl cursor-pointer bg-cover bg-center"
+        style={{ backgroundImage: "url('../src/assets/goupchats/b27a49cc3697f5d6c06f63de9d556a4598c75db5_1000x282.png')" }}
         onClick={() =>
-          joinGroupChat("60f5a3b4c4567890abcd5679", "Чат на тему anime")
+          joinGroupChat("60f5a3b4c4567890abcd5669", "Чат на тему НЛТУ")
         }
       >
-        <p>Чат на тему anime:</p>
+        <p className="bg-black text-white w-24 p-1">Чат на тему НЛТУ:</p>
       </div>
     </div>
   );

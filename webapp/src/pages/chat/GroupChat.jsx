@@ -56,7 +56,7 @@ function GroupChat() {
   };
 
   return (
-    <div className="bg-slate-600 text-white flex flex-col h-[85vh] relative">
+    <div className="bg-logo1 bg-opacity-75 text-white flex flex-col h-[85vh] relative">
       <GroupMessageList messages={messages} senderId={senderId} />
       <MessageInput sendMessage={sendMessage} />
     </div>

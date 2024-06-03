@@ -11,7 +11,7 @@ function MessageList({ messages, senderId, receiverId }) {
         .map((msg, index) => (
           <div
             key={index}
-            className="border bg-slate-700 p-1 m-1 flex justify-between"
+            className="border bg-logo2 p-1 m-1 flex justify-between"
           >
             <div className="flex flex-row ">
               <strong className="mr-8 ">

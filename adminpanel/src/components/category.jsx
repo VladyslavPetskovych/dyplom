@@ -30,7 +30,6 @@ function Category() {
         category_name: categoryName,
       });
       console.log(response.data);
-      // Optionally, reset the category name input after successful submission
       setCategoryName("");
     } catch (error) {
       console.error("Error:", error);
