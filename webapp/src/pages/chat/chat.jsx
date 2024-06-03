@@ -11,7 +11,6 @@ function Chat() {
   const receiverId = parseInt(receiverIdString);
   const senderId = parseInt(useSelector((state) => state.user.chatId));
   const [messages, setMessages] = useState([]);
-
   useEffect(() => {
     const fetchMessages = async () => {
       try {
@@ -23,21 +22,16 @@ function Chat() {
         console.error("Failed to load messages:", error);
       }
     };
-
     fetchMessages();
-
     socket.emit("joinRoom", { userId: senderId });
-
     socket.on("message", (message) => {
       console.log("Message received:", message);
       setMessages((prevMessages) => [...prevMessages, message]);
     });
-
     return () => {
       socket.off("message");
     };
   }, [senderId, receiverId]);
-
   const sendMessage = (input) => {
     if (input.trim()) {
       const messageData = {
@@ -46,11 +40,9 @@ function Chat() {
         message: input,
         timestamp: new Date(),
       };
-
       socket.emit("sendMessage", messageData);
     }
   };
-
   return (
     <div className="bg-logo1 text-white flex flex-col h-[85vh] relative">
       <MessageList messages={messages} senderId={senderId} receiverId={receiverId} />

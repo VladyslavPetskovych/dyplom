@@ -58,7 +58,7 @@ function Profile() {
         </div>
 
         <img
-          className="h-32 w-32 rounded-full border border-black "
+          className="h-32 w-32 rounded-full border object-cover  border-black "
           src={userProfilePic}
           alt="User Profile"
         />

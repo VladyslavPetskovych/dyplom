@@ -47,12 +47,12 @@ function PreviousAnswers() {
       
       {isOpen && (
         <div>
-          {/* Background overlay */}
+    
           <div
             className="fixed top-0 left-0 w-screen h-screen bg-black opacity-50 z-40"
             onClick={closeWindow}
           ></div>
-          {/* Sliding window */}
+      
           <div
             className={`bg-black bg-opacity-70 fixed top-0 left-0 h-full z-50 overflow-y-auto sliding-window ${
               isOpen ? "slide-in" : "slide-out"

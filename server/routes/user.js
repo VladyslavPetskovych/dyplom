@@ -10,7 +10,6 @@ router.post("/", async (req, res) => {
     const { chatId, name } = req.body;
     console.log(name + " route is running for initializing user!");
 
-    // Check if the user already exists
     let existingUser = await urModel.findOne({ chatId });
 
     if (existingUser) {
