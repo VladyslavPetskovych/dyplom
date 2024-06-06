@@ -10,7 +10,7 @@ function GroupMessageList({ messages, senderId }) {
         .reverse()
         .map((msg, index) => (
           <div
-            key={msg._id || index} // Ensure msg.id is unique or fallback to index
+            key={msg._id || index} 
             className={`border p-1 m-1 flex flex-col ${
               msg.senderId === senderId ? "bg-logo2" : "bg-logo3"
             }`}

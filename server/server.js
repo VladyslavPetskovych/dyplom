@@ -1,6 +1,6 @@
 const express = require("express");
-const http = require("http"); // Include the HTTP module
-const socketIo = require("socket.io"); // Include Socket.IO
+const http = require("http");
+const socketIo = require("socket.io"); 
 const app = express();
 const server = http.createServer(app);
 const Message = require("./models/Message");
@@ -8,12 +8,12 @@ const axios = require("axios");
 
 const io = socketIo(server, {
   cors: {
-    origin: "*", // Allow all origins for development, restrict in production
+    origin: "*", 
     methods: ["GET", "POST"],
   },
 });
 
-const dbConfig = require("./db"); // Configure your database (ensure this sets up the connection)
+const dbConfig = require("./db"); 
 const cors = require("cors");
 const path = require("path");
 

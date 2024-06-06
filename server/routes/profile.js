@@ -31,15 +31,14 @@ router.put("/edit/:chatId", async (req, res) => {
 
   try {
     const updatedFields = { name, age, sex, city };
-    // Remove undefined fields
     Object.keys(updatedFields).forEach(
       (key) => updatedFields[key] === undefined && delete updatedFields[key]
     );
 
     const user = await urModel.findOneAndUpdate(
-      { chatId }, // Find user by chatId
-      updatedFields, // Update the fields
-      { new: true } // Return the modified user
+      { chatId }, 
+      updatedFields, 
+      { new: true } 
     );
 
     if (!user) {
@@ -53,10 +52,9 @@ router.put("/edit/:chatId", async (req, res) => {
   }
 });
 
-const storage = multer.memoryStorage(); // Use memory storage to handle file transformation
+const storage = multer.memoryStorage(); 
 const upload = multer({ storage: storage });
 
-// Update user profile picture
 router.put(
   "/editPhoto/:chatId",
   upload.single("profilePic"),
@@ -67,17 +65,16 @@ router.put(
     }
 
     try {
-      // Load the image with Jimp
+
       const image = await Jimp.read(req.file.buffer);
-      // Resize the image to width of 500 pixels and auto scale the height
+
       await image.resize(500, Jimp.AUTO);
-      // Convert the image to JPEG format
+     
       const buffer = await image.quality(90).getBufferAsync(Jimp.MIME_JPEG);
 
-      const filename = `${chatId}.jpeg`; // Save the file as JPEG with chatId as the filename
+      const filename = `${chatId}.jpeg`; 
       const filePath = path.join(__dirname, "..", "usersPics", filename);
 
-      // Write the processed image to disk
       await fs.promises.writeFile(filePath, buffer);
       const updatedUser = await urModel.findOneAndUpdate(
         { chatId: parseInt(chatId) },

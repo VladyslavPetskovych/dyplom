@@ -4,7 +4,6 @@ const urModel = require("../models/users");
 
 router.use(express.json());
 
-
 router.post("/", async (req, res) => {
   try {
     const { chatId, name } = req.body;
@@ -33,14 +32,10 @@ router.post("/edit", async (req, res) => {
   try {
     const { chatId, name } = req.body;
     console.log(name + " route is running for editing user's name!");
-
-    // Find the user by chatId
     let existingUser = await urModel.findOne({ chatId });
-
     if (!existingUser) {
       return res.status(404).send("User not found");
     } else {
-      // Update the user's name
       existingUser.name = name;
       await existingUser.save();
       res.send("User's name updated successfully to: " + name);
@@ -80,28 +75,21 @@ router.get("/getUser/:chatId", async (req, res) => {
 router.post("/answer", async (req, res) => {
   try {
     const { chatId, questionId, answer } = req.body;
-
     console.log("Received data:", { chatId, questionId, answer });
-
-    // Check if chatId, questionId, and answer are provided
     if (!chatId || !questionId || !answer) {
       return res
         .status(400)
         .json({ message: "chatId, questionId, and answer are required" });
     }
-
-    // Find the user by chatId or create a new one if not found
     let user = await urModel.findOne({ chatId });
 
     if (!user) {
-      user = new urModel({ chatId, answers: [] }); // Initialize answers as an empty array
+      user = new urModel({ chatId, answers: [] }); 
     }
 
-    // Convert questionId and answer to numbers
     const questionIdNum = parseInt(questionId);
     const answerNum = parseInt(answer);
 
-    // Check if the questionId already exists in answers array
     const existingAnswerIndex = user.answers.findIndex((ans) => {
       console.log("Answer:", ans);
       console.log("Comparison:", ans.questionId, questionIdNum);
@@ -110,10 +98,10 @@ router.post("/answer", async (req, res) => {
     console.log("Existing Answer Index:", existingAnswerIndex);
 
     if (existingAnswerIndex !== -1) {
-      // If the questionId already exists, update the answer
+     
       user.answers[existingAnswerIndex].answer = answerNum;
     } else {
-      // If the questionId doesn't exist, add a new answer
+  
       user.answers.push({ questionId: questionIdNum, answer: answerNum });
     }
 

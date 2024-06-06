@@ -10,8 +10,7 @@ function GroupChat() {
   const { chatId } = useParams();
   const senderId = useSelector((state) => state.user.chatId);
   const [messages, setMessages] = useState([]);
-  const hasConnected = useRef(false); // useRef to keep track of connection status
-
+  const hasConnected = useRef(false); 
   useEffect(() => {
     const fetchMessages = async () => {
       try {
@@ -23,20 +22,15 @@ function GroupChat() {
         console.error("Failed to load messages:", error);
       }
     };
-
     fetchMessages();
-
-    // Ensure joinGroup is emitted only once
     if (!hasConnected.current) {
       socket.emit("joinGroup", { chatId });
       hasConnected.current = true;
     }
-
     socket.on("groupMessage", (message) => {
       console.log("Group message received:", message);
       setMessages((prevMessages) => [...prevMessages, message]);
     });
-
     return () => {
       socket.off("groupMessage");
     };
@@ -54,7 +48,6 @@ function GroupChat() {
       socket.emit("sendGroupMessage", messageData);
     }
   };
-
   return (
     <div className="bg-logo1 bg-opacity-75 text-white flex flex-col h-[85vh] relative">
       <GroupMessageList messages={messages} senderId={senderId} />

@@ -59,7 +59,7 @@ router.post("/joinGroupChat", async (req, res) => {
       chat = new Chat({
         _id: chatId,
         participants: [userId],
-        chatName: chatName || "Group Chat", // Default to "Group Chat" if chatName is not provided
+        chatName: chatName || "Group Chat", 
       });
       await chat.save();
       return res.status(201).json({
