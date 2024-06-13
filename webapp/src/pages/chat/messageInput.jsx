@@ -9,7 +9,7 @@ function MessageInput({ sendMessage }) {
   };
 
   return (
-    <div className="flex bg-slate-500 p-3 sticky bottom-0 w-full">
+    <div className="flex bg-slate-500 p-3 mb-5 sticky bottom-0 w-full">
       <input
         className="flex-1 text-black p-2 rounded-l"
         value={input}

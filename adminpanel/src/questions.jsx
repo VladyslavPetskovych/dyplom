@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import ListCategory from "./components/listCategory";
 import axios from "axios";
-import Modal from "./components/homeModal";
+import Modal from "./components/questionsModal";
 
-function Home() {
+function Question() {
   const [inputValue, setInputValue] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategoryId, setSelectedCategoryId] = useState("");
@@ -103,4 +103,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Question;

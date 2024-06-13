@@ -19,12 +19,11 @@ const Modal = ({ isOpen, onClose, children }) => {
 
     if (isOpen) {
       fetchQuestions();
-      document.body.style.overflow = "hidden"; // Hide background scrollbar
+      document.body.style.overflow = "hidden"; 
     } else {
-      document.body.style.overflow = "auto"; // Show background scrollbar
+      document.body.style.overflow = "auto"; 
     }
 
-    // Cleanup function to reset overflow style
     return () => {
       document.body.style.overflow = "auto";
     };
@@ -35,7 +34,7 @@ const Modal = ({ isOpen, onClose, children }) => {
       await axios.delete(
         `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/questions/${questionId}`
       );
-      // Update the questions state after deleting a question
+     
       setQuestions((prevQuestions) =>
         prevQuestions.filter((question) => question._id !== questionId)
       );

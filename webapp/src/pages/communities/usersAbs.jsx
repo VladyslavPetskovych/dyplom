@@ -37,11 +37,7 @@ function UsersAbs({ opacity }) {
 
   const toggleExpand = () => {
     setExpanded(!expanded);
-    if (!expanded) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    
   };
 
   return (

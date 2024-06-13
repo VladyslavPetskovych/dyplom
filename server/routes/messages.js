@@ -4,7 +4,6 @@ const Message = require("../models/Message");
 const Chat = require("../models/chats");
 const axios = require("axios");
 
-// Message retrieval route
 router.get("/messages/:senderId/:receiverId", async (req, res) => {
   const { senderId, receiverId } = req.params;
   try {
@@ -23,7 +22,7 @@ router.get("/messages/:senderId/:receiverId", async (req, res) => {
 
 async function createChat(participantIds) {
   const url =
-    "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/chats/newChat"; // Adjust the URL as needed
+    "https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/server3/chats/newChat"; 
   const data = {
     participantIds: participantIds,
   };
@@ -41,7 +40,7 @@ async function createChat(participantIds) {
 
 router.post("/messages", async (req, res) => {
   const { message } = req.body;
-  // Parse senderId and receiverId from request body
+  
   const senderId = parseInt(req.body.senderId);
   const receiverId = parseInt(req.body.receiverId);
 
@@ -58,14 +57,14 @@ router.post("/messages", async (req, res) => {
       senderId,
       receiverId,
       message,
-      timestamp: new Date(), // Assuming your schema has a timestamp
+      timestamp: new Date(), 
     });
     await newMessage.save();
 
     try {
       console.log("fdfdfd");
       await createChat([senderId, receiverId]);
-      res.status(201).json(newMessage); // Successfully saved message and tried to create chat
+      res.status(201).json(newMessage); 
     } catch (chatError) {
       console.error("Failed to create chat:", chatError);
       res
@@ -102,7 +101,6 @@ router.get("/groupMessages/:chatId/:userId", async (req, res) => {
   }
 });
 
-// Post a new message to a group chat
 router.post("/groupMessages", async (req, res) => {
   const { chatId, senderId, message } = req.body;
 
