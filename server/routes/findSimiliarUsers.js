@@ -17,10 +17,11 @@ async function fetchData(chatId) {
 
 function calculateCustomSimilarity(answer1, answer2) {
     const difference = Math.abs(answer1 - answer2);
-    const alpha = 5; 
-    return Math.exp(-alpha * difference);
+    const maxDifference = 10; // Assuming the maximum possible difference between answers is 10
+    const normalizedDifference = difference / maxDifference;
+    const weight = Math.random(); // Random weight for each question to introduce variance
+    return (1 - normalizedDifference) * weight;
 }
-
 
 function extractAndAlignAnswers(targetAnswers, userAnswers) {
     const targetMap = new Map(targetAnswers.map(a => [a.questionId, a.answer]));
