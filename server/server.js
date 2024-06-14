@@ -36,7 +36,7 @@ const qRouter = require("./routes/question");
 const categoryRouter = require("./routes/category");
 const profileRouter = require("./routes/profile");
 const userAnswersRouter = require("./routes/userAnswers");
-const userQuestionsRouter = require("./routes/userQuestions");
+
 const userPostsRouter = require("./routes/posts");
 const messagesRouter = require("./routes/messages");
 const chatsRouter = require("./routes/chats");
@@ -47,7 +47,7 @@ app.use("/server3/questions", qRouter);
 app.use("/server3/category", categoryRouter);
 app.use("/server3/profile", profileRouter);
 app.use("/server3/userAnswers", userAnswersRouter);
-app.use("/server3/userQuestions", userQuestionsRouter);
+
 app.use("/server3/userPosts", userPostsRouter);
 app.use("/server3/messages", messagesRouter);
 app.use("/server3/chats", chatsRouter);
