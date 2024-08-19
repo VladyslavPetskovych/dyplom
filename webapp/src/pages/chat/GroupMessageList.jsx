@@ -1,5 +1,5 @@
 import React from "react";
-import FetchUser from "./showUser";
+import ShowUser from "./showUser";
 import { format } from "date-fns";
 
 function GroupMessageList({ messages, senderId }) {
@@ -16,7 +16,7 @@ function GroupMessageList({ messages, senderId }) {
             }`}
           >
             <div className="flex">
-              <FetchUser chatId={msg.senderId} />
+              <ShowUser chatId={msg.senderId} />
               <span className="break-all ml-3 mt-1.5 ">{msg.message}</span>
             </div>
             <div className="text-xs text-black self-end mt-1 drop-shadow-[0_1.1px_1.1px_rgba(255,255,255,1)]">

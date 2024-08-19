@@ -26,7 +26,7 @@ function UserList({ users, similarities, showSimilarities }) {
               <img
                 src={user.img ? `https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/usersPics/${user.img}` : defaultUserImage}
                 alt={user.name || "anon"}
-                className="h-10 w-10 rounded-full"
+                className="h-10 w-10 rounded-full object-cover"
               />
               <span className='text-black'>{user.name || "anon"}</span>
             </div>

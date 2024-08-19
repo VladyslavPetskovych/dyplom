@@ -41,7 +41,7 @@ function ChatButton({ chat, currentUserId }) {
       >
         <div className="flex flex-row justify-start items-center">
           <img
-            className="w-9 h-9 mr-3 rounded-full"
+            className="w-9 h-9 mr-3 rounded-full object-cover"
             src={`https://ip-194-99-21-21-101470.vps.hosted-by-mvps.net/usersPics/${otherUser.user.img}`}
             alt=""
           />
