@@ -13,7 +13,6 @@ function Statistics({ chatId }) {
         )
         .then((response) => {
           setUser(response.data.user);
-          console.log(response.data);
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
@@ -27,8 +26,7 @@ function Statistics({ chatId }) {
 
   const { name, img, answers, posts, age, sex, city } = user;
 
-  // Debugging: Check the fetched value of sex
-  console.log(`Fetched sex value: '${sex}'`);
+
 
   const normalizedSex = sex?.trim().toLowerCase();
   const displaySex =
