@@ -10,30 +10,35 @@ import Chat from "./pages/chat/chat.jsx";
 import { useDispatch } from "react-redux";
 import { setChatId } from "./redux/store";
 
+import TextProvider from "./context/TextProvider.jsx";
+
 import GroupChat from "./pages/chat/GroupChat.jsx";
+import UsersProvider from "./context/UsersProvider.jsx";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     tg.ready();
-   dispatch(setChatId(tg.initDataUnsafe.user.id));
-     //dispatch(setChatId(938729564));
+    //dispatch(setChatId(tg.initDataUnsafe.user.id));
+    dispatch(setChatId(938729564));
   }, []);
+
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/communities" element={<Communities />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/user/:userId" element={<UserPage />} />
-        <Route path="/chat/:receiverId" element={<Chat />} />
-        <Route path="/groupChat/:chatId" element={<GroupChat />} />
-      </Routes>
-      <FooterMenu />
-
+      <UsersProvider>
+        <TextProvider>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/communities" element={<Communities />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/user/:userId" element={<UserPage />} />
+            <Route path="/chat/:receiverId" element={<Chat />} />
+            <Route path="/groupChat/:chatId" element={<GroupChat />} />
+          </Routes>
+          <FooterMenu />
+        </TextProvider>
+      </UsersProvider>
       <div>
-
-        
         {/*  <p>{tg.initDataUnsafe.user.id}</p>
         <pre className="mt-[1000px] text-white">
           {JSON.stringify(tg.initData.user, null, 2)}
